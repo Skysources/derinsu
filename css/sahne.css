@@ -1,0 +1,321 @@
+/* =========================================================
+   DERİNSU — sahneler (js/liman.js): liman, ana ekran kartları, deniz alanı kartları
+   Çizim renkleri değişkenden gelir: gündüz ve gece (body.night) aynı çizim iki ışıkta.
+   ========================================================= */
+:root { --k-plas: #e9dcc0; --k-plasL: #f4ead2; --k-plasS: #cdbd9c; --k-wall: #cbb791; --k-wallS: #a8936f; --k-stone: #a39680; --k-stoneL: #bdb09a; --k-stoneD: #7d715f; --k-roofR: #b9583e; --k-roofRl: #d0715a; --k-roofRd: #8e4230; --k-roofB: #56727f; --k-roofBd: #3f5761; --k-wood: #8a6240; --k-woodL: #a87c52; --k-woodD: #5e4028; --k-door: #5a3b24; --k-doorB: #3f6b7a; --k-dark: #2e2620; --k-porch: #4a3c32; --k-arch: #2a211c; --k-win: #4b6570; --k-lampg: #d9caa2; --k-gold: #e7c26a; --k-awnA: #c0503c; --k-awnB: #f0e4c8; --k-paper: #efe6cf; --k-paperG: #e3d6a8; --k-green: #6a8a52; --k-greenL: #84a367; --k-greenD: #4a6a3e; --k-cypS: #3b5636; --k-rock: #8f8672; --k-rockL: #a9a08a; --k-rockD: #6b6352; --k-shut: #4f7d6a; --k-shutB: #4a7186; --k-iron: #4a4a4e; --k-fire: #ff9a3c; --k-fireL: #ffd27a; --k-fish: #c9d6da; --k-fishD: #9fb0b8; --k-white: #f6f0e2; --k-ice: #dfeef0; --k-smoke: #d6cfc4; --k-smokeL: #ebe5da; --k-beam: #fff0c0; --k-shade: rgba(0,0,0,.22); --k-shadeW: rgba(8,30,40,.32); --k-skin: #d9b08c; --k-star: #f2eee4; --k-moonS: #1a2440; --k-cloud: #f7efdf; --k-far1: #93b3b0; --k-far2: #7fa398; --k-hill: #718f60; --k-hillL: #84a06a; --k-path: #d8c49a; --k-pathL: #eadbb4; --k-ret: #b29b78; --k-retD: #8a7658; --k-ter: #a2a872; --k-ter2: #93a26c; --k-quay: #cdbb96; --k-quayD: #948466; --k-foamF: #eef4f4;
+  --s-ln: rgba(40,26,14,.34); --s-fr: #5a4630; --s-ir: #3a3a40; --s-tl: rgba(60,20,10,.26); --s-pole: #6a4a2c; --s-rope: #c9b68c; --s-hi: rgba(255,240,210,.5); --s-dk: #3a2a18; --s-ink: rgba(60,45,30,.55); --s-anch: #44444c; --s-foam: rgba(240,248,248,.9); --s-gull: #f6f2e8; --s-jn: rgba(60,44,26,.26);
+  --gl: 0; --gl-on: .55; --nt: 0; --sun: 1; --beam: .07; }
+body.night { --k-plas: #6c6f88; --k-plasL: #7b7f99; --k-plasS: #565970; --k-wall: #5d5f77; --k-wallS: #494b62; --k-stone: #4f5168; --k-stoneL: #5d6078; --k-stoneD: #3b3d52; --k-roofR: #5c3b49; --k-roofRl: #6e4956; --k-roofRd: #452b38; --k-roofB: #32445a; --k-roofBd: #253447; --k-wood: #493d44; --k-woodL: #5a4b50; --k-woodD: #322930; --k-door: #2d2429; --k-doorB: #2a4458; --k-dark: #12121a; --k-porch: #1b1a24; --k-arch: #0f0f17; --k-win: #ffd27a; --k-lampg: #fff0b8; --k-gold: #dcbb68; --k-awnA: #6c3b47; --k-awnB: #8f8c9c; --k-paper: #9c99a8; --k-paperG: #8c8892; --k-green: #33493f; --k-greenL: #3f574a; --k-greenD: #253a33; --k-cypS: #1b2c2a; --k-rock: #474a5e; --k-rockL: #565a70; --k-rockD: #333547; --k-shut: #32514f; --k-shutB: #2e4559; --k-iron: #2a2b34; --k-fire: #ff9a3c; --k-fireL: #ffd27a; --k-fish: #8a98aa; --k-fishD: #6f7d92; --k-white: #a8abc0; --k-ice: #8f9db6; --k-smoke: #7f8298; --k-smokeL: #8d90a6; --k-beam: #fff0c0; --k-shade: rgba(0,0,0,.3); --k-shadeW: rgba(2,6,16,.4); --k-skin: #8a7a84; --k-star: #f2eee4; --k-moonS: #141d36; --k-cloud: #3a4766; --k-far1: #27344f; --k-far2: #212c45; --k-hill: #27393c; --k-hillL: #2d4242; --k-path: #6a6b83; --k-pathL: #7a7c95; --k-ret: #54566e; --k-retD: #3d3f55; --k-ter: #33463f; --k-ter2: #30423d; --k-quay: #62647c; --k-quayD: #43455b; --k-foamF: #b9c6e2;
+  --s-ln: rgba(6,6,16,.42); --s-fr: #3a3040; --s-ir: #22232c; --s-tl: rgba(10,6,16,.3); --s-pole: #3a3036; --s-rope: #77788c; --s-hi: rgba(200,210,255,.22); --s-dk: #201a20; --s-ink: rgba(20,18,30,.55); --s-anch: #8085a0; --s-foam: rgba(190,206,238,.75); --s-gull: #b8c0da; --s-jn: rgba(6,6,18,.34);
+  --gl: .95; --gl-on: 1; --nt: 1; --sun: 0; --beam: .17; }
+.k-plas { fill: var(--k-plas); } .k-plasL { fill: var(--k-plasL); } .k-plasS { fill: var(--k-plasS); } .k-wall { fill: var(--k-wall); } .k-wallS { fill: var(--k-wallS); } .k-stone { fill: var(--k-stone); } .k-stoneL { fill: var(--k-stoneL); } .k-stoneD { fill: var(--k-stoneD); } .k-roofR { fill: var(--k-roofR); } .k-roofRl { fill: var(--k-roofRl); } .k-roofRd { fill: var(--k-roofRd); } .k-roofB { fill: var(--k-roofB); } .k-roofBd { fill: var(--k-roofBd); } .k-wood { fill: var(--k-wood); } .k-woodL { fill: var(--k-woodL); } .k-woodD { fill: var(--k-woodD); } .k-door { fill: var(--k-door); } .k-doorB { fill: var(--k-doorB); } .k-dark { fill: var(--k-dark); } .k-porch { fill: var(--k-porch); } .k-arch { fill: var(--k-arch); } .k-win { fill: var(--k-win); } .k-lampg { fill: var(--k-lampg); } .k-gold { fill: var(--k-gold); } .k-awnA { fill: var(--k-awnA); } .k-awnB { fill: var(--k-awnB); } .k-paper { fill: var(--k-paper); } .k-paperG { fill: var(--k-paperG); } .k-green { fill: var(--k-green); } .k-greenL { fill: var(--k-greenL); } .k-greenD { fill: var(--k-greenD); } .k-cypS { fill: var(--k-cypS); } .k-rock { fill: var(--k-rock); } .k-rockL { fill: var(--k-rockL); } .k-rockD { fill: var(--k-rockD); } .k-shut { fill: var(--k-shut); } .k-shutB { fill: var(--k-shutB); } .k-iron { fill: var(--k-iron); } .k-fire { fill: var(--k-fire); } .k-fireL { fill: var(--k-fireL); } .k-fish { fill: var(--k-fish); } .k-fishD { fill: var(--k-fishD); } .k-white { fill: var(--k-white); } .k-ice { fill: var(--k-ice); } .k-smoke { fill: var(--k-smoke); } .k-smokeL { fill: var(--k-smokeL); } .k-beam { fill: var(--k-beam); } .k-shade { fill: var(--k-shade); } .k-shadeW { fill: var(--k-shadeW); } .k-skin { fill: var(--k-skin); } .k-star { fill: var(--k-star); } .k-moonS { fill: var(--k-moonS); } .k-cloud { fill: var(--k-cloud); } .k-far1 { fill: var(--k-far1); } .k-far2 { fill: var(--k-far2); } .k-hill { fill: var(--k-hill); } .k-hillL { fill: var(--k-hillL); } .k-path { fill: var(--k-path); } .k-pathL { fill: var(--k-pathL); } .k-ret { fill: var(--k-ret); } .k-retD { fill: var(--k-retD); } .k-ter { fill: var(--k-ter); } .k-ter2 { fill: var(--k-ter2); } .k-quay { fill: var(--k-quay); } .k-quayD { fill: var(--k-quayD); } .k-foamF { fill: var(--k-foamF); }
+.k-cloud { opacity: .8; } body.night .k-cloud { opacity: .55; } .k-smoke { opacity: .5; } .k-smokeL { opacity: .42; } .k-beam { opacity: var(--beam); } .k-star { opacity: .9; }
+.s-ln { stroke: var(--s-ln); } .s-fr { stroke: var(--s-fr); } .s-ir { stroke: var(--s-ir); } .s-tl { stroke: var(--s-tl); } .s-pole { stroke: var(--s-pole); } .s-rope { stroke: var(--s-rope); } .s-hi { stroke: var(--s-hi); } .s-dk { stroke: var(--s-dk); } .s-ink { stroke: var(--s-ink); } .s-anch { stroke: var(--s-anch); } .s-foam { stroke: var(--s-foam); } .s-gull { stroke: var(--s-gull); } .s-jn { stroke: var(--s-jn); } .s-woodL { stroke: var(--k-woodL); } .s-gd { stroke: var(--k-gold); } .s-rib { stroke: var(--k-woodL); } .s-retD { stroke: var(--k-retD); } .s-foam, .s-gull, .s-rope, .s-pole { stroke-linecap: round; }
+.scn *, .scn-sp * { transition: fill 1.8s ease, stroke 1.8s ease; }
+.glw { opacity: var(--gl); transition: opacity 1.8s; pointer-events: none; } .glw.on { opacity: var(--gl-on); } .glw.fire { animation: aBreath 1.4s ease-in-out infinite; }
+.nt-op { opacity: var(--nt); transition: opacity 1.8s; } .refl { opacity: calc(var(--nt) * .2); transition: opacity 1.8s; }
+.nt-veil { fill: #0a1030; opacity: calc(var(--nt) * .42); transition: opacity 1.8s; pointer-events: none; }
+.sk-sun { opacity: var(--sun); transition: opacity 1.8s; } .sk-moon, .sk-stars { opacity: var(--nt); transition: opacity 1.8s; }
+/* kıpırtılar */
+.a-flag { transform-box: view-box; animation: aFlag 1.5s ease-in-out infinite alternate; }
+.a-sway { transform-box: view-box; animation: aSway 3.8s ease-in-out infinite; }
+.a-swing { transform-box: view-box; animation: aSwing 3.2s ease-in-out infinite; }
+.a-flap { transform-box: view-box; animation: aFlap 2.6s ease-in-out infinite; }
+.a-smoke circle { transform-box: fill-box; transform-origin: center; animation: aSmoke 4.2s ease-out infinite; }
+.a-fire { transform-box: fill-box; transform-origin: 50% 100%; animation: aFire .85s ease-in-out infinite alternate; }
+.a-bob { transform-box: view-box; animation: aBob 3.6s ease-in-out infinite; }
+.a-beam { transform-box: view-box; transform-origin: 32px 34px; animation: aBeam 7s ease-in-out infinite; }
+.a-fly { animation: aFly 34s linear infinite; } .a-flapw { transform-box: fill-box; transform-origin: 50% 100%; animation: aFlapw .7s ease-in-out infinite alternate; }
+.a-cloud { animation: aCloud 120s ease-in-out infinite alternate; }
+.a-wave { animation: aWave 7s linear infinite; } .a-wave.b { animation-duration: 11s; animation-direction: reverse; } .a-wave.c { animation-duration: 15s; }
+.a-swell { animation: aSwell 9s linear infinite; } .a-swell.b { animation-duration: 13s; animation-direction: reverse; } .a-swell.c { animation-duration: 17s; }
+.a-tw { animation: aTw 3.2s ease-in-out infinite; } .a-breath { animation: aBreath 4.2s ease-in-out infinite; }
+.a-walk { animation: aWalk 46s linear infinite alternate; }
+.a-spin { transform-box: view-box; animation: aSpin 9s linear infinite; }
+.a-jump { transform-box: fill-box; transform-origin: center; animation: aJump 11s ease-in-out infinite; }
+.a-leap { transform-box: view-box; animation: aLeap 7s ease-in-out infinite; }
+.a-drift { animation: aDrift 14s ease-in-out infinite alternate; }
+@keyframes aFlag { from { transform: skewY(-7deg) scaleX(1); } to { transform: skewY(7deg) scaleX(.86); } }
+@keyframes aSway { 0%, 100% { transform: rotate(-1.8deg); } 50% { transform: rotate(1.8deg); } }
+@keyframes aSwing { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+@keyframes aFlap { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(6deg) skewX(-3deg); } }
+@keyframes aSmoke { from { transform: translate(0, 5px) scale(.5); opacity: 0; } 22% { opacity: 1; } to { transform: translate(11px, -24px) scale(1.8); opacity: 0; } }
+@keyframes aFire { from { transform: scale(1, 1); } to { transform: scale(.9, 1.15); } }
+@keyframes aBob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(1.6px) rotate(2deg); } }
+@keyframes aBeam { 0%, 100% { transform: scaleX(1); opacity: 1; } 50% { transform: scaleX(.04); opacity: .35; } }
+@keyframes aFly { from { transform: translate(0, 0); } 50% { transform: translate(230px, -16px); } to { transform: translate(470px, 6px); } }
+@keyframes aFlapw { from { transform: scaleY(1); } to { transform: scaleY(.3); } }
+@keyframes aCloud { from { transform: translateX(-46px); } to { transform: translateX(46px); } }
+@keyframes aWave { from { transform: translateX(0); } to { transform: translateX(var(--p, 44px)); } }
+@keyframes aSwell { from { transform: translateX(0); } to { transform: translateX(64px); } }
+@keyframes aTw { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+@keyframes aBreath { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+@keyframes aWalk { from { transform: translateX(0); } to { transform: translateX(var(--dx, 100px)); } }
+@keyframes aSpin { to { transform: rotate(360deg); } }
+@keyframes aJump { 0%, 86% { opacity: 0; transform: translate(-10px, 6px) rotate(-30deg); } 89% { opacity: 1; } 93% { transform: translate(0, -14px) rotate(0deg); opacity: 1; } 99% { opacity: 1; } 100% { transform: translate(12px, 6px) rotate(50deg); opacity: 0; } }
+@keyframes aLeap { 0%, 62% { transform: translate(-14px, 18px) rotate(-24deg); opacity: 0; } 70% { opacity: 1; } 80% { transform: translate(0, 0) rotate(-6deg); opacity: 1; } 92% { opacity: 1; } 100% { transform: translate(16px, 20px) rotate(28deg); opacity: 0; } }
+@keyframes aDrift { from { transform: translateX(-12px); } to { transform: translateX(12px); } }
+
+/* ---------- gök: gündüz ve gece katmanı (üst üste, geçişli) ---------- */
+.sky { position: absolute; background: linear-gradient(180deg, #5d8798 0%, #86aeb4 52%, #c9d3b6 82%, #efdcb0 100%); }
+.sky::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #0b1020 0%, #131c33 50%, #22304e 84%, #33425f 100%); opacity: var(--nt); transition: opacity 1.8s; }
+
+/* =========================================================
+   LİMAN
+   ========================================================= */
+.lm { flex: 1; min-height: 0; position: relative; overflow: hidden; isolation: isolate; container-type: size; margin: 0 2px; border-radius: 22px; background: #1f4c5c;
+  box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 0 2.5px #4a3f2a, 0 14px 30px -18px #000; }
+.lm::after { content: ''; position: absolute; inset: 0; z-index: 6; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(231, 194, 106, .22), inset 0 0 34px rgba(10, 8, 6, .5), inset 0 26px 30px -22px rgba(10, 8, 6, .55); }
+.lm-stage { position: absolute; left: 50%; bottom: 0; width: min(100cqw, calc(100cqh * 390 / 700)); aspect-ratio: 390 / 700; transform: translateX(-50%); }
+.lm-stage > .sky { left: -100cqw; right: -100cqw; top: -100cqh; bottom: 77%; }
+.lm-bg, .lm-fg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; display: block; }
+.lm-fg { z-index: 4; pointer-events: none; }
+.lmb { position: absolute; z-index: 2; display: block; padding: 0; background: none; -webkit-tap-highlight-color: transparent; transform-origin: 50% 100%;
+  animation: lmIn .7s var(--spring) both; animation-delay: calc(var(--i) * .05s + .08s); transition: transform .28s var(--spring), filter .2s; }
+.lmb > svg { display: block; width: 100%; height: auto; overflow: visible; pointer-events: none; }
+.lmb:active { transform: scale(.94); filter: brightness(1.12); }
+.lmb-iskele { z-index: 1; }
+@keyframes lmIn { from { opacity: 0; transform: translateY(10%) scale(.86); } }
+.lm-tag { position: absolute; left: 50%; top: calc(100% + 3px); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 2.5px 8px 3px; border-radius: 8px; white-space: nowrap; pointer-events: none;
+  background: rgba(18, 15, 12, .86); box-shadow: 0 0 0 1px #0b0a0a, inset 0 0 0 1px rgba(231, 194, 106, .26), 0 4px 8px -4px #000; }
+.lm-tag b { font: 700 9.5px/1.1 var(--fs); letter-spacing: .05em; color: var(--title); }
+.lm-tag small { display: none; font: 600 8px/1.15 var(--fn); color: var(--lab); } .lm-tag small b { font: 700 8px var(--fn); letter-spacing: 0; color: var(--gold); } .lm-tag small .coin { font-size: 8px; }
+.lm-tag.has small { display: block; }
+.lm-tag.has { box-shadow: 0 0 0 1px #0b0a0a, inset 0 0 0 1px rgba(231, 194, 106, .55), 0 0 12px -3px rgba(231, 194, 106, .5); }
+.lm-dot { position: absolute; right: -3px; top: -3px; width: 7px; height: 7px; transform: rotate(45deg); display: none; box-shadow: 0 0 0 1.5px #0b0a0a; }
+.lm-dot.on { display: block; background: #5fd36f; box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 8px #5fd36f; animation: pulseOp 1.8s ease-in-out infinite; }
+.lm-dot.warn { display: block; background: var(--gold); box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 8px var(--gold); animation: pulseOp 1.3s ease-in-out infinite; }
+.lm-ship { position: absolute; z-index: 1; left: 2%; top: 74.6%; width: 39%; padding: 0; background: none; display: block; -webkit-tap-highlight-color: transparent; animation: lmIn .7s var(--spring) both .5s; }
+.lm-ship svg { display: block; width: 100%; height: auto; aspect-ratio: 240 / 150; overflow: visible; pointer-events: none; }
+.lm-go { position: absolute; z-index: 3; left: 67.2%; top: 88.6%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 0; background: none; animation: lmIn .7s var(--spring) both .6s; }
+.lm-go .btn { height: 34px; padding: 0 11px 0 17px; font-size: 12px; box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 18px -2px rgba(231, 194, 106, .7); animation: midPulse 2.2s ease-in-out infinite; }
+.lm-go small { font: 600 8.5px/1 var(--fn); color: #f2ead8; text-shadow: 0 1px 3px #000, 0 0 6px #000; white-space: nowrap; } .lm-go small b { color: var(--gold); }
+.lm-go:active .btn { transform: scale(.95); }
+.lm-chips { position: absolute; z-index: 5; left: 10px; right: 10px; top: 10px; display: flex; justify-content: space-between; gap: 6px; pointer-events: none; }
+.lm-chips .chip { background: rgba(14, 12, 10, .7); }
+/* gece: sahnenin üstünde kalan gökte de yıldız */
+.lm-stage > .sky::before { content: ''; position: absolute; inset: 0; z-index: 1; opacity: var(--nt); transition: opacity 1.8s;
+  background-image: radial-gradient(1.2px 1.2px at 12% 62%, #f2eee4 50%, transparent 52%), radial-gradient(1px 1px at 30% 70%, #f2eee4 50%, transparent 52%), radial-gradient(1.4px 1.4px at 44% 58%, #f2eee4 50%, transparent 52%), radial-gradient(1px 1px at 55% 66%, #f2eee4 50%, transparent 52%), radial-gradient(1.2px 1.2px at 61% 74%, #f2eee4 50%, transparent 52%), radial-gradient(1px 1px at 38% 78%, #f2eee4 50%, transparent 52%), radial-gradient(1.3px 1.3px at 47% 82%, #f2eee4 50%, transparent 52%), radial-gradient(1px 1px at 52% 60%, #f2eee4 50%, transparent 52%), radial-gradient(1px 1px at 41% 64%, #f2eee4 50%, transparent 52%), radial-gradient(1.2px 1.2px at 58% 80%, #f2eee4 50%, transparent 52%); }
+
+/* =========================================================
+   ANA EKRAN: liman kartı ve açık deniz kartı
+   ========================================================= */
+.hm-card { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; min-height: 0; width: calc(100% - 4px); margin: 0 2px; padding: 0; text-align: left; border-radius: 24px; background: #171514;
+  box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 0 2.5px #4a3f2a, 0 14px 30px -18px #000; transition: transform .3s var(--spring); animation: hmIn .7s var(--spring) both; }
+.hm-card:active { transform: scale(.98); }
+.hm-card::after { content: ''; position: absolute; inset: 0; z-index: 5; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(231, 194, 106, .24); }
+@keyframes hmIn { from { opacity: 0; transform: translateY(14px) scale(.97); } }
+.hm-city { flex: 1.28 1 0; } .hm-sea { flex: 1 1 0; animation-delay: .08s; }
+.hm-art { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.hm-art .sky { inset: 0; }
+.hm-art > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hm-art::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 -30px 26px -18px #171514, inset 0 22px 26px -20px rgba(10, 8, 6, .6); }
+.hm-top { position: absolute; z-index: 3; left: 10px; right: 10px; top: 10px; display: flex; justify-content: space-between; gap: 6px; pointer-events: none; }
+.hm-top .chip { background: rgba(14, 12, 10, .74); backdrop-filter: none; }
+.hm-body { position: relative; z-index: 2; flex: none; display: flex; flex-direction: column; padding: 8px 14px 13px; background: linear-gradient(180deg, #171514, #141211); }
+.hm-name { font: 700 clamp(22px, 7vw, 26px)/1 var(--fs); letter-spacing: .02em; color: var(--gold); margin-top: 5px; }
+.hm-desc { font: 400 11px/1.35 var(--fb); color: #cfc8c2; margin-top: 4px; } .hm-desc b { color: var(--title); font-weight: 700; }
+.hm-foot { display: flex; align-items: center; gap: 6px; margin-top: 10px; min-height: 34px; }
+.hm-pills { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 5px; max-height: 50px; overflow: hidden; }
+.hm-pill { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 9px; border-radius: 99px; font: 600 9.5px/1 var(--fn); color: var(--lab); background: #100e0d; box-shadow: inset 0 0 0 1px #2a2622; white-space: nowrap; }
+.hm-pill i { width: 6px; height: 6px; transform: rotate(45deg); background: #5fd36f; box-shadow: 0 0 6px #5fd36f; }
+.hm-pill.warn i { background: var(--gold); box-shadow: 0 0 6px var(--gold); animation: pulseOp 1.3s ease-in-out infinite; }
+.hm-pill.calm i { background: #5a5148; box-shadow: none; }
+.hm-sea .hm-art { position: absolute; inset: 0; }
+.hm-sea .hm-art::after { box-shadow: none; background: linear-gradient(180deg, transparent 38%, rgba(12, 16, 20, .5) 66%, rgba(12, 14, 16, .9)); }
+.hm-sea .hm-body { margin-top: auto; background: none; padding-bottom: 14px; }
+.hm-sea .hm-name { color: #dff0ea; text-shadow: 0 2px 10px rgba(0, 0, 0, .7); }
+.hm-sea .hm-desc { color: #c6d2cd; text-shadow: 0 1px 4px rgba(0, 0, 0, .8); }
+.hm-ship { position: absolute; left: 50%; top: 50%; width: min(62%, 240px); transform: translate(-42%, -70%); pointer-events: none; }
+.hm-ship svg { display: block; width: 100%; height: auto; aspect-ratio: 240 / 150; overflow: visible; }
+.hm-sea.on { box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 0 2.5px #8a7144, 0 14px 30px -18px #000; }
+
+/* =========================================================
+   DENİZLER: avlanma alanı kartları
+   ========================================================= */
+.ar-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 0 2px; }
+.ac { position: relative; isolation: isolate; overflow: hidden; display: block; min-height: 0; padding: 0; text-align: left; border-radius: 16px; background: #14110f;
+  box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 0 2.5px color-mix(in srgb, var(--tc) 46%, #2a2520), 0 10px 20px -14px #000; transition: transform .25s var(--spring); animation: hmIn .55s var(--spring) both; animation-delay: calc(var(--i) * .045s); }
+.ac:active { transform: scale(.96); }
+.ac-art { position: absolute; inset: 0; z-index: -2; } .ac-art svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ac-veil { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(12, 10, 9, .16) 0%, transparent 26%, transparent 50%, rgba(12, 10, 9, .72) 80%, rgba(12, 10, 9, .92)); }
+.ac::after { content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tc) 30%, transparent); }
+.ac-tier { position: absolute; left: 7px; top: 7px; min-width: 24px; height: 24px; padding: 0 5px; display: grid; place-items: center; border-radius: 8px; font: 700 11px/1 var(--fs); color: var(--tc); background: rgba(14, 12, 10, .84); box-shadow: 0 0 0 1px #0b0a0a, inset 0 0 0 1px color-mix(in srgb, var(--tc) 60%, transparent); }
+.ac-time { position: absolute; right: 7px; top: 7px; display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 7px; border-radius: 99px; font-size: 9px; color: var(--title); background: rgba(14, 12, 10, .8); box-shadow: 0 0 0 1px #0b0a0a; }
+.ac-time .ic { font-size: 9px; color: var(--gold); }
+.ac-tx { position: absolute; left: 9px; right: 9px; bottom: 11px; display: grid; gap: 2px; }
+.ac-tx b { font: 700 13px/1.05 var(--fs); letter-spacing: .02em; color: var(--title); text-shadow: 0 1px 4px #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ac-tx small { font: 500 9px/1.1 var(--fb); color: var(--lab); text-shadow: 0 1px 3px #000; } .ac-tx small em { font-style: normal; color: var(--tc); }
+.ac-bar { position: absolute; left: 9px; right: 9px; bottom: 5px; height: 2.5px; border-radius: 2px; background: rgba(255, 255, 255, .12); overflow: hidden; }
+.ac-bar i { display: block; height: 100%; border-radius: 2px; background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 70%, #fff), var(--tc)); transition: width 1s linear; }
+.ac.lock .ac-art { filter: grayscale(.8) brightness(.55); } .ac.lock .ac-time, .ac.lock .ac-bar { display: none; }
+.ac.lock { box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 0 2.5px #2a2520; }
+.ac-lock { position: absolute; right: 7px; top: 7px; display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px; border-radius: 99px; font: 600 8.5px/1 var(--fn); color: #f0b8a8; background: rgba(14, 12, 10, .86); box-shadow: 0 0 0 1px #0b0a0a, inset 0 0 0 1px rgba(232, 71, 76, .35); }
+.ac-lock .ic { font-size: 9px; }
+.ac.here { box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 0 2.5px var(--gold), 0 0 22px -4px rgba(231, 194, 106, .7); }
+.ac-here { position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%); padding: 3px 9px; border-radius: 99px; font: 700 8px/1 var(--fs); letter-spacing: .16em; color: #1a1410; background: linear-gradient(180deg, #f0d07c, #d6af57); box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 14px rgba(231, 194, 106, .6); animation: pulseOp 1.8s ease-in-out infinite; }
+.ar-head.new { gap: 3px; padding-top: 0; } .ar-head.new small { font-size: 10px; }
+.ar-dn { display: inline-flex; align-items: center; gap: 5px; }
+/* gece: gemi de ay ışığına bürünür (tek öğe) */
+.lm-ship svg, .hm-ship svg { transition: filter 1.8s; }
+body.night .lm-ship svg, body.night .hm-ship svg { filter: brightness(.66) saturate(.8); }
+/* liman ana ekran: başlık, boş bağlama, dokunuş halkası, yeni kıpırtılar */
+.lm-title { position: absolute; z-index: 5; left: 0; right: 0; top: 42px; display: flex; flex-direction: column; align-items: center; gap: 3px; pointer-events: none; animation: hmIn .8s var(--spring) both .15s; }
+.lm-title small { font: 600 9.5px/1 var(--fs); letter-spacing: .22em; text-transform: uppercase; color: #f2ead8; text-shadow: 0 1px 4px rgba(0, 0, 0, .55); opacity: .92; }
+.lm-title b { font: 700 clamp(24px, 7.6vw, 29px)/1 var(--fs); letter-spacing: .04em; color: #fff3d0; text-shadow: 0 2px 0 rgba(60, 40, 10, .35), 0 3px 14px rgba(0, 0, 0, .45); }
+body.night .lm-title b { color: var(--gold); }
+.lm-orn { display: flex; align-items: center; gap: 7px; margin-top: 1px; }
+.lm-orn::before, .lm-orn::after { content: ''; width: 46px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 243, 208, .8)); } .lm-orn::after { transform: scaleX(-1); }
+.lm-orn i { width: 5px; height: 5px; transform: rotate(45deg); background: #fff3d0; box-shadow: 0 0 8px rgba(255, 243, 208, .8); }
+.lm-moor { position: absolute; z-index: 1; left: 18%; top: 82%; width: 9px; height: 9px; border-radius: 50%; background: #c0503c; box-shadow: 0 0 0 1.5px #f6f0e2, 0 3px 0 -1px rgba(255, 255, 255, .35); opacity: 0; transition: opacity .4s; animation: lmFloat 3.2s ease-in-out infinite; }
+.lm.away .lm-moor { opacity: 1; } .lm.away .lm-ship { display: none; }
+@keyframes lmFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(2px); } }
+.lm-rip { position: absolute; z-index: 1; width: 64px; height: 24px; margin: -12px 0 0 -32px; border-radius: 50%; border: 1.5px solid rgba(240, 248, 248, .85); pointer-events: none; animation: lmRip .9s ease-out forwards; }
+.lm-rip.b { animation-delay: .16s; opacity: 0; }
+@keyframes lmRip { from { transform: scale(.12); opacity: .9; } to { transform: scale(1); opacity: 0; } }
+.lmb.pop > svg { animation: lmPop .5s var(--spring); }
+@keyframes lmPop { 0% { transform: scale(1); } 35% { transform: scale(.93, .9); } 70% { transform: scale(1.04, 1.06); } 100% { transform: scale(1); } }
+.lmb > svg { transform-origin: 50% 100%; }
+.nt-only { opacity: var(--nt); transition: opacity 1.8s; }
+.s-cat { stroke: var(--k-dark); } .s-spark { stroke: #fff8e0; }
+.a-rod { transform-box: view-box; animation: aRod 4.6s ease-in-out infinite; }
+.a-bobber { animation: aBobber 4.6s ease-in-out infinite; }
+.a-wing { transform-box: view-box; animation: aWing 6s ease-in-out infinite; }
+.a-row { animation: aRow 80s linear infinite; }
+.a-oar { transform-box: view-box; animation: aOar 1.8s ease-in-out infinite; }
+.a-shoot { animation: aShoot 13s ease-in infinite; }
+.a-flit { animation: aFlit 12s ease-in-out infinite; } .a-flapb { transform-box: fill-box; transform-origin: 50% 100%; animation: aFlapw .28s ease-in-out infinite alternate; }
+@keyframes aRod { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-4deg); } 86% { transform: rotate(0deg); } 90% { transform: rotate(-12deg); } 94% { transform: rotate(-2deg); } }
+@keyframes aBobber { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(1.4px); } 88% { transform: translateY(0); } 91% { transform: translateY(4px); } 95% { transform: translateY(-1px); } }
+@keyframes aWing { 0%, 84%, 100% { transform: rotate(0deg); } 88% { transform: rotate(-38deg); } 92% { transform: rotate(6deg); } 96% { transform: rotate(-24deg); } }
+@keyframes aRow { from { transform: translateX(-70px); } to { transform: translateX(480px); } }
+@keyframes aOar { 0%, 100% { transform: rotate(-16deg); } 50% { transform: rotate(18deg); } }
+@keyframes aShoot { 0%, 90% { transform: translate(330px, 16px); opacity: 0; } 91% { opacity: 1; } 97% { opacity: 1; } 100% { transform: translate(150px, 80px); opacity: 0; } }
+@keyframes aFlit { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(14px, -10px); } 50% { transform: translate(26px, 2px); } 75% { transform: translate(8px, 8px); } }
+
+/* =========================================================
+   Ada görünümlerin içinde: sahneler ekranın tepesine kadar uzanır, üstteki ada (bildirim yeri) sahnenin üstünde yüzer.
+   --tu: sahnenin tepesinden adanın altına kadar olan pay; üst köşedeki çipler ve düğmeler bunun altından başlar.
+   ========================================================= */
+.hud { grid-row: 1; grid-column: 1; pointer-events: none; }
+.island { pointer-events: auto; }
+.stage { grid-row: 1 / 3; grid-column: 1; margin-top: -5px; --tu: calc(var(--hud-h) + 10px); }
+.dock { grid-row: 3; }
+/* ada: yarı saydam cam; çerçevesi bulunduğu yere göre renk alır */
+.island { background: linear-gradient(180deg, rgba(32, 29, 26, .84), rgba(18, 17, 16, .9)); -webkit-backdrop-filter: blur(12px) saturate(1.3); backdrop-filter: blur(12px) saturate(1.3);
+  box-shadow: 0 0 0 1.5px var(--isl-bd, #413826), inset 0 1px 0 rgba(255, 240, 210, .08), 0 10px 24px -8px rgba(0, 0, 0, .75); }
+body[data-view="city"] { --isl-bd: rgba(231, 194, 106, .55); } body.night[data-view="city"] { --isl-bd: rgba(150, 170, 220, .45); }
+body[data-view="sea"] { --isl-bd: rgba(126, 196, 200, .5); } body.night[data-view="sea"] { --isl-bd: rgba(110, 140, 210, .45); }
+body[data-view="areas"] { --isl-bd: rgba(231, 194, 106, .45); }
+/* liman */
+.lm { margin: 0 2px; }
+.lm-chips { top: var(--tu); }
+.lm-title { top: calc(var(--tu) + 34px); }
+/* denizler: tepedeki manzara şeridi */
+.ar-ban { position: relative; isolation: isolate; overflow: hidden; flex: none; display: flex; flex-direction: column; gap: 6px; margin: 0 2px; padding: var(--tu) 10px 10px; border-radius: 22px;
+  box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 0 2.5px #4a3f2a, 0 14px 30px -18px #000; }
+.ar-ban::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit; background: linear-gradient(180deg, rgba(12, 12, 14, .1) 30%, rgba(12, 12, 14, .62) 100%); box-shadow: inset 0 0 0 1px rgba(231, 194, 106, .22); }
+.ar-art { position: absolute; inset: 0; z-index: -2; } .ar-art .sky { inset: 0; } .ar-art > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ar-ban .icon-btn, .ar-ban .chip { box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px #3a3125; background: rgba(12, 10, 9, .8); }
+.ar-ban .bv-name { color: #fff3d0; text-shadow: 0 2px 8px rgba(0, 0, 0, .7); font-size: 18px; }
+.ar-ban .ar-head small { color: #e6dfd7; text-shadow: 0 1px 4px rgba(0, 0, 0, .8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.ar-ban .ar-title b { color: #fff3d0; text-shadow: 0 1px 6px rgba(0, 0, 0, .7); } .ar-ban .ar-title i { background: linear-gradient(90deg, transparent, rgba(255, 243, 208, .7)); } .ar-ban .ar-title i:last-child { background: linear-gradient(90deg, rgba(255, 243, 208, .7), transparent); }
+/* kenardaki yapıların durum yazılı levhası sahnenin dışına taşmasın */
+.lmb-ambar .lm-tag.has, .lmb-ticaret .lm-tag.has, .lmb-tersane .lm-tag.has { left: 0; transform: none; }
+.lmb-fener .lm-tag.has, .lmb-zanaat .lm-tag.has, .lmb-isleme .lm-tag.has { left: auto; right: 0; transform: none; }
+
+/* =========================================================
+   Ferahlık düzeni: üst bölgede yazılar üst üste binmesin
+   ========================================================= */
+/* liman: sahne, ada ile deniz fenerinin tepesi çakışmayacak kadar aşağıdan başlar; başlık ve çipler solda tek blok */
+.lm-stage { width: min(100cqw, calc((100cqh - 44px) * 390 / 700)); }
+.lm-top { position: absolute; z-index: 5; left: 14px; top: calc(var(--tu) + 6px); display: flex; flex-direction: column; align-items: flex-start; pointer-events: none; animation: hmIn .8s var(--spring) both .15s; }
+.lm-top > small { font: 600 9px/1 var(--fs); letter-spacing: .2em; text-transform: uppercase; color: #f2ead8; text-shadow: 0 1px 4px rgba(0, 0, 0, .6); }
+.lm-top > b { margin-top: 5px; font: 700 clamp(20px, 6vw, 23px)/1 var(--fs); letter-spacing: .04em; color: #fff3d0; text-shadow: 0 2px 0 rgba(60, 40, 10, .35), 0 3px 12px rgba(0, 0, 0, .5); }
+body.night .lm-top > b { color: var(--gold); }
+.lm-top .lm-chips { position: static; margin-top: 11px; display: flex; justify-content: flex-start; gap: 6px; }
+.lm-tag.has small { display: none; }      /* durum yazısı yok: parlayan levha ve elmas yeter */
+.lm-tag { padding: 3.5px 9px 4px; }
+.lm-go { gap: 6px; }
+/* açık deniz: tepesi adaya ve bildirimlere kalır; ad, saat ve düğmeler haritanın altında iki ferah satır */
+.sv-chip { height: 28px; padding: 0 12px; gap: 6px; font-size: 10px; }
+.sv-name { left: 10px; top: auto; bottom: 52px; } .sv-name b { font: 700 11.5px/1 var(--fs); letter-spacing: .04em; color: var(--gold); }
+.sv-time { right: 10px; top: auto; bottom: 52px; }
+.sv-sep { width: 3px !important; height: 3px !important; border-radius: 50%; transform: none !important; background: #6d5e3b; flex: none; }
+.sv-bar { position: absolute; z-index: 5; left: 10px; right: 10px; bottom: 10px; display: flex; gap: 8px; pointer-events: none; }
+.sv-bar .chip-btn { pointer-events: auto; height: 32px; padding: 0 12px; gap: 6px; font-size: 10.5px; background: rgba(12, 10, 9, .84); box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px #3a3125, 0 6px 12px -6px #000; }
+.sv-bar .sv-port { margin-left: auto; color: #1a1410; background: linear-gradient(180deg, #f0d07c, #d6af57); box-shadow: 0 0 0 1.5px #0b0a0a, 0 6px 12px -6px #000; } .sv-bar .sv-port .ic { color: #1a1410; }
+.sea-stage .mv-center { bottom: 92px; }
+.sea-stage .fv-tip { bottom: 94px; }
+.fv-combo { top: calc(var(--tu) + 74px); }
+/* denizler: şeritte satırlar arası boşluk */
+.ar-ban { gap: 10px; padding: calc(var(--tu) + 6px) 12px 13px; }
+.ar-ban .ar-head.new { gap: 6px; }
+.areas-view { gap: 10px; }
+.ac-tx { gap: 4px; bottom: 13px; }
+.sv-chip[hidden] { display: none; }
+.lm-top > small { color: #fff; text-shadow: 0 1px 2px rgba(40, 28, 10, .75), 0 0 8px rgba(40, 28, 10, .45); }
+
+/* adanın hemen altı bildirimlere ayrılır: liman başlığı ve Denizler satırı o bölgenin altından başlar */
+.lm-stage { width: min(100cqw, calc((100cqh - 112px) * 390 / 700)); }
+.lm-top { top: calc(var(--tu) + 66px); }
+.ar-ban { gap: 0; padding: calc(var(--tu) + 4px) 12px 12px; }
+.ar-ban .ar-head.new { padding: 0; }
+.ar-ban .bv-top { margin-top: 46px; height: 36px; }
+
+/* =========================================================
+   DÜNYA HARİTASI ve TOPLAMA SAHASI
+   ========================================================= */
+.world-view { gap: 0; }
+.s-road { stroke: var(--k-retD); stroke-linecap: round; opacity: .55; } .s-roadL { stroke: var(--k-path); stroke-linecap: round; }
+.s-stem { stroke: #4f7f3d; } .s-grass { stroke: var(--k-greenD); stroke-linecap: round; } .s-field { stroke: var(--k-greenD); stroke-linecap: round; opacity: .35; }
+.wm .lm-tag small, .wm .lm-tag.has small { display: block; font: 600 8px/1.15 var(--fn); color: var(--lab); }
+.wm .lm-tag { padding: 3.5px 10px 4px; }
+.wm .wmr { z-index: 2; } .wm .wmr-city { z-index: 3; }
+.wm .wmr-city .lm-tag { background: linear-gradient(180deg, #f0d07c, #d6af57); box-shadow: 0 0 0 1.5px #0b0a0a, 0 0 14px -2px rgba(231, 194, 106, .7); } .wm .wmr-city .lm-tag b, .wm .wmr-city .lm-tag small { color: #1a1410; }
+.wm .lm-top { top: calc(var(--tu) + 66px); }
+/* saha: düğümler */
+.fn { position: absolute; width: 0; height: 0; padding: 0; background: none; z-index: 1; -webkit-tap-highlight-color: transparent; }
+.fn .nd { position: absolute; left: -38px; top: -60px; width: 76px; height: 76px; overflow: visible; transition: transform .25s var(--spring); animation: lmIn .5s var(--spring) both; }
+.fn:active .nd { transform: scale(.93); }
+.fn.on .nd { filter: drop-shadow(0 0 7px rgba(231, 194, 106, .7)); }
+.fn .nd.whack { animation: fnWhack .22s ease-out; }
+@keyframes fnWhack { 30% { transform: scale(.92, .88) translateY(2px); } 70% { transform: scale(1.04, 1.06); } }
+.fn > small { position: absolute; left: 0; top: -78px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 4px; padding: 2.5px 8px 3px; border-radius: 99px; white-space: nowrap; pointer-events: none;
+  font: 600 9px/1.1 var(--fn); color: var(--lab); background: rgba(14, 12, 10, .84); box-shadow: 0 0 0 1px #0b0a0a, inset 0 0 0 1px color-mix(in srgb, var(--qc) 40%, #2a2520); }
+.fn > small i { width: 5px; height: 5px; border-radius: 50%; background: var(--qc); box-shadow: 0 0 5px var(--qc); } .fn > small b { color: var(--qc); }
+.fn.on > small { color: var(--title); box-shadow: 0 0 0 1px #0b0a0a, inset 0 0 0 1px var(--gold), 0 0 10px -2px rgba(231, 194, 106, .6); }
+.nd.n-mob .ring { stroke: var(--qc); stroke-width: 1; stroke-opacity: .5; }
+.fd-res { overflow: hidden; } .fd-res img, .fd-res svg { width: 76%; height: 76%; object-fit: contain; }
+#fdBar .fb small b { color: var(--title); }
+#fdPull.idle .pull-ring .r1 { stroke-dashoffset: 226.2 !important; }
+/* pencere: saha seçimi */
+.tr-sub { margin: 0; font: 400 10.5px/1.4 var(--fb); color: var(--muted); }
+.tr-list { display: grid; gap: 7px; }
+.tr-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 14px; text-align: left; background: #141211; box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px color-mix(in srgb, var(--tc) 30%, #2a2520); transition: transform .2s var(--spring); }
+.tr-row:active { transform: scale(.98); }
+.tr-t { width: 26px; height: 26px; flex: none; display: grid; place-items: center; border-radius: 8px; font: 700 11px/1 var(--fs); color: var(--tc); background: #0f0d0c; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tc) 55%, transparent); }
+.tr-fr { width: 38px; height: 38px; flex: none; }
+.tr-tx { flex: 1; min-width: 0; display: grid; gap: 3px; } .tr-tx b { font: 700 13px/1.1 var(--fs); color: var(--title); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tr-tx small { font: 500 9.5px/1.2 var(--fb); color: var(--muted); }
+.tr-row.lock { opacity: .62; } .tr-lock { display: inline-flex; align-items: center; gap: 4px; font: 600 8.5px var(--fn); color: #f0b8a8; white-space: nowrap; } .tr-lock .ic { font-size: 10px; }
+.tr-row.here { box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px var(--gold), 0 0 14px -4px rgba(231, 194, 106, .6); }
+.tr-here { padding: 3px 8px; border-radius: 99px; font: 700 7.5px/1 var(--fs); letter-spacing: .14em; color: #1a1410; background: linear-gradient(180deg, #f0d07c, #d6af57); }
+.tr-tool { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 14px; background: #171412; box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px #3a3125; }
+.tr-ti { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 11px; background: #0f0d0c; box-shadow: inset 0 0 0 1px #453b28; } .tr-ti img { width: 84%; height: 84%; object-fit: contain; }
+.sh-ic img { object-fit: contain; }
+
+/* şehir (genel): yeni yapı renkleri ve yerleşim */
+.k-chan { fill: #5a9aa0; transition: fill 1.8s; } body.night .k-chan { fill: #28435c; }
+.s-beam { stroke: var(--k-woodD); stroke-linecap: round; } .s-wheel { stroke: var(--k-woodD); }
+.lm-ship { left: 1%; top: 75.6%; width: 37%; }
+.lm-go { left: 79%; top: 91.6%; gap: 4px; } .lm-go .btn { height: 31px; font-size: 11.5px; }
+.lm-moor { left: 16%; top: 83%; }
+.lmb-iskele { z-index: 2; }
+/* demirci penceresi */
+.sm-list { display: grid; gap: 7px; }
+.sm-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 14px; background: #141211; box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px #2e2924; }
+.sm-row .tr-ti { width: 42px; height: 42px; }
+.sm-row .btn[disabled] { opacity: .5; }
+.sm-max { font: 700 8.5px/1 var(--fs); letter-spacing: .12em; color: var(--gold); }
+.btn.mini { flex: none; height: 30px; padding: 0 11px; font-size: 10.5px; gap: 5px; } .btn.mini .coin { font-size: 11px; } .btn.mini[disabled] { opacity: .5; }
+

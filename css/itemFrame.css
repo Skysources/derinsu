@@ -1,0 +1,266 @@
+/* Eşya çerçevesi: IDLE SKY tasarım paketinden (items/frames/itemFrame.css), olduğu gibi.
+   Kademe = çerçevenin işçiliği + sağ üst rozet; nadirlik = metal, kenar ve kafes rengi. */
+@font-face { font-family: Kurale; src: url(../assets/fonts/kurale-latin.woff2) format('woff2'); font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F; }
+@font-face { font-family: Kurale; src: url(../assets/fonts/kurale-latin-ext.woff2) format('woff2'); font-display: swap; unicode-range: U+0100-024F, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF; }
+/* ---------------------------------------------------------------- item frame (itemFrame.ts)
+ * Tier (I–V) = the frame's craftsmanship (SVG symbols #ifr-f1..f5, drawn in --mL/--mM/--mD);
+ * rarity = the colour of that metal, the thin edge and the diamond-lattice ground (--rc…).
+ * Sizes come from the box (container units), so any square from ~32 to 96 px works.
+ */
+
+/* zero specificity: the host's own rules (position, size, radius) always win */
+:where(.ifr) {
+  --rc: #e8e4dc;
+  --rl: #fffaf0;
+  --rg: rgba(232, 228, 220, 0.3);
+  --mL: #fffaf0;
+  --mM: #b9b2a6;
+  --mD: #2b2723;
+  position: relative;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border-radius: 8px;
+  container-type: size;
+  isolation: isolate;
+}
+
+.ifr-green {
+  --rc: #6fcf62;
+  --rl: #b6f0a8;
+  --rg: rgba(111, 207, 98, 0.45);
+}
+
+.ifr-blue {
+  --rc: #4ea4f0;
+  --rl: #a8d4ff;
+  --rg: rgba(78, 164, 240, 0.48);
+}
+
+.ifr-orange {
+  --rc: #d06c14;
+  --rl: #ffae78;
+  --rg: rgba(208, 108, 20, 0.55);
+}
+
+.ifr-red {
+  --rc: #e8474c;
+  --rl: #ffb0a6;
+  --rg: rgba(232, 71, 76, 0.6);
+}
+
+.ifr-green,
+.ifr-blue,
+.ifr-orange,
+.ifr-red {
+  --mL: color-mix(in srgb, var(--rc) 50%, #fff6e2);
+  --mM: color-mix(in srgb, var(--rc) 72%, #a39b8e);
+  --mD: color-mix(in srgb, var(--rc) 30%, #120c08);
+}
+
+.ifr > .ifr-bg,
+.ifr > .ifr-pt,
+.ifr > .ifr-fx,
+.ifr > .ifr-fr,
+.ifr > .ifr-tm,
+.ifr > .ifr-n {
+  position: absolute;
+  pointer-events: none;
+}
+
+.ifr > .ifr-bg,
+.ifr > .ifr-pt,
+.ifr > .ifr-fx {
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* ground: dark, with a breath of the rarity colour toward the middle */
+.ifr > .ifr-bg {
+  z-index: 0;
+  background: radial-gradient(80% 75% at 50% 55%, color-mix(in srgb, var(--rc) 18%, #1b1815), #0e0c0b 92%);
+  box-shadow: 0 0 0 1.5px #0b0a0a, 0 3px 6px rgba(0, 0, 0, 0.45);
+}
+
+.ifr-white > .ifr-bg {
+  background: radial-gradient(80% 75% at 50% 55%, #24201d, #0e0c0b 92%);
+}
+
+/* diamond lattice in the rarity colour, fading toward the edges */
+.ifr > .ifr-pt,
+.ifr > .ifr-fx {
+  -webkit-mask-image: repeating-linear-gradient(45deg, #000 0 1px, transparent 1px 16cqmin), repeating-linear-gradient(-45deg, #000 0 1px, transparent 1px 16cqmin);
+  mask-image: repeating-linear-gradient(45deg, #000 0 1px, transparent 1px 16cqmin), repeating-linear-gradient(-45deg, #000 0 1px, transparent 1px 16cqmin);
+}
+
+.ifr > .ifr-pt {
+  z-index: 1;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--rc) 22%, transparent) 10%, transparent 100%);
+}
+
+.ifr-white > .ifr-pt {
+  background: radial-gradient(closest-side, rgba(232, 228, 220, 0.13) 10%, transparent 100%);
+}
+
+/* orange and red: a soft light drifting across the lattice (transform only) */
+.ifr > .ifr-fx {
+  z-index: 2;
+  overflow: hidden;
+}
+
+.ifr > .ifr-fx > i {
+  position: absolute;
+  left: -35%;
+  top: -35%;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--rl), transparent);
+  opacity: 0;
+  animation: ifr-drift 4.6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.ifr-red > .ifr-fx > i {
+  animation-duration: 3.4s;
+}
+
+@keyframes ifr-drift {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(143%, 143%);
+    opacity: 0;
+  }
+}
+
+/* The icon PNGs are already centred in their 256 px canvas with ~10% transparent margin per side
+   (art ≈ 78–80% of the canvas on average, docs/item-icons/PIPELINE.md), so the box is set large and
+   dead centre: 88% of the slot puts the painted part at ~70% (up to ~85% for Tier V silhouettes),
+   clear of the frame line, with the tier badge and the stack count sitting over the margin. */
+.ifr > .ifr-ico {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 88%;
+  height: 88%;
+  margin: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 1.5px 1.5px rgba(0, 0, 0, 0.6));
+}
+
+.ifr > .ifr-ico > svg,
+.ifr > .ifr-ico > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ifr > .ifr-fr {
+  z-index: 4;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0.5px 0.5px rgba(0, 0, 0, 0.7));
+}
+
+/* the tier badge: a small black plate fitted into the top-right corner, the same on every tier */
+.ifr > .ifr-tm {
+  z-index: 5;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 31%;
+  height: 31%;
+  box-sizing: border-box;
+  padding: 0 0 4% 6%;
+  border-radius: 0 26% 0 45%;
+  background: linear-gradient(225deg, #2c2825, #0e0c0b 80%);
+  box-shadow: inset 1px -1px 0 rgba(214, 208, 198, 0.35), -1px 1px 3px rgba(0, 0, 0, 0.55);
+  font: 900 max(6px, 13cqmin) / 1 Cinzel, serif;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.ifr > .ifr-tm > i {
+  font-style: normal;
+  background: linear-gradient(180deg, #fffaf0 15%, #cfc8bc 55%, #8f887e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.9));
+}
+
+.ifr > .ifr-n {
+  z-index: 6;
+  right: 8%;
+  bottom: 3%;
+  font: 400 max(9px, 20cqmin) / 1.2 Kurale, Georgia, serif;
+  color: #f2ead8;
+  text-shadow: 0 1px 2px #000, 0 0 4px #000, 0 0 2px #000;
+  font-variant-numeric: tabular-nums;
+}
+
+/* states the host can force (hover is usually the host's own :hover) */
+.ifr-hover {
+  filter: brightness(1.13);
+}
+
+.ifr-selected::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  z-index: 7;
+  border-radius: 12px;
+  border: 1.5px solid #f3d68e;
+  box-shadow: 0 0 14px rgba(243, 214, 142, 0.38);
+  pointer-events: none;
+}
+
+/* an empty slot: the same ground and lattice, greyed, with a plain hairline */
+.ifr-empty {
+  --rc: #4a4440;
+  --mM: #3a3532;
+  --mD: #0b0a0a;
+  --mL: #5a534e;
+}
+
+.ifr-empty > .ifr-bg {
+  background: radial-gradient(85% 85% at 50% 50%, #1a1715, #0e0c0b 92%);
+  box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 2px 6px rgba(0, 0, 0, 0.55);
+}
+
+.ifr-empty > .ifr-pt {
+  opacity: 0.16;
+}
+
+.ifr-empty > :not(.ifr-bg):not(.ifr-pt):not(.ifr-fr) {
+  position: relative;
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ifr > .ifr-fx > i {
+    animation: none;
+    opacity: 0.35;
+    transform: translate(70%, 70%);
+  }
+}
+
+/* Mitik: altın */
+.ifr-gold { --rc: #f3c64a; --rl: #fff1b8; --rg: rgba(243, 198, 74, 0.6); --mL: color-mix(in srgb, var(--rc) 50%, #fff6e2); --mM: color-mix(in srgb, var(--rc) 72%, #a39b8e); --mD: color-mix(in srgb, var(--rc) 30%, #120c08); }
+.ifr-gold > .ifr-fx > i { animation-duration: 2.6s; }
+.mat-svg { width: 100%; height: 100%; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .55)); }
+.mat-svg .mat-glow { animation: pulseOp 2.4s ease-in-out infinite; }
+.itc-svg { display: grid; place-items: center; } .itc-svg .mat-svg { width: 80%; height: 80%; }

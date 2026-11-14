@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#12100d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Derinsu — yarı idle balıkçılık oyunu">
+<title>Derinsu</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700;800&family=Alegreya+SC:wght@500;700&family=Inter:wght@500;600;700&family=Cinzel:wght@700;900&family=Kurale&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/nodes.css">
+<link rel="stylesheet" href="css/landnode.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/sahne.css">
+<link rel="stylesheet" href="css/sehir.css">
+<link rel="stylesheet" href="css/envanter.css">
+<link rel="stylesheet" href="css/itemFrame.css">
+<link rel="stylesheet" href="css/itemCard.css">
+<link rel="stylesheet" href="css/notices.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="gCoin" cx=".34" cy=".3" r=".8"><stop offset="0" stop-color="#fff7dc"/><stop offset=".3" stop-color="#f0d58c"/><stop offset=".7" stop-color="#c99a3e"/><stop offset="1" stop-color="#7a5a22"/></radialGradient>
+    <radialGradient id="gPearl" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#ece6f2"/><stop offset=".75" stop-color="#b7aec4"/><stop offset="1" stop-color="#6f6680"/></radialGradient>
+    <symbol id="g-coin" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.6" fill="url(#gCoin)"/><circle cx="10" cy="10" r="5.6" fill="none" stroke="#8a6526" stroke-width="1" opacity=".55"/><path d="M8 7.4h4M8 12.6h4M10 7.4v5.2" stroke="#7a5a22" stroke-width="1.2" stroke-linecap="round" opacity=".7"/></symbol>
+    <symbol id="g-pearl" viewBox="0 0 20 20"><ellipse cx="10" cy="15" rx="8.4" ry="3.2" fill="#2b2733" stroke="#6f6680" stroke-width=".8"/><circle cx="10" cy="10" r="5.6" fill="url(#gPearl)"/><circle cx="8" cy="8" r="1.4" fill="#fff" opacity=".9"/></symbol>
+
+    <symbol id="i-pick" viewBox="0 0 24 24"><path d="M3.5 8.8Q12 2.2 20.5 8.8"/><path d="M12.4 5.4L6.2 20.6"/></symbol>
+    <symbol id="i-axe" viewBox="0 0 24 24"><path d="M7.5 21L15 5.5"/><path d="M12.6 4.4c3.4-1.7 6.9 0 7.9 3.6-3 .4-5.4.1-8.2-1.5z"/></symbol>
+    <symbol id="i-sickle" viewBox="0 0 24 24"><path d="M5.5 20.5l4.5-4.5"/><path d="M10 16C4.6 10.6 8.6 3.2 16.4 3.6c-4.8 2-6.9 6.6-3.8 10.8"/></symbol>
+    <symbol id="i-knife" viewBox="0 0 24 24"><path d="M4 20l4.6-4.6"/><path d="M8.6 15.4L19.6 4.4c.8 4.7-1.7 9-7.8 11.6z"/></symbol>
+    <symbol id="i-swords" viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/><path d="M9.5 6.5L18 3h3v3l-3.5 8.5"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+    <symbol id="i-helm" viewBox="0 0 24 24"><path d="M5 15.5a7 7 0 0 1 14 0v3H5z"/><path d="M12 8.5v10M8.5 15.5h7"/></symbol>
+    <symbol id="i-armor" viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10v-6z"/><path d="M12 6v12M7.5 9.5h9"/></symbol>
+    <symbol id="i-glove" viewBox="0 0 24 24"><path d="M7.5 20.5v-6.2L5.2 10.6a1.2 1.2 0 0 1 2-1.3l1.3 1.9V5a1.2 1.2 0 0 1 2.4 0v5.2V4a1.2 1.2 0 0 1 2.4 0v6.2V5a1.2 1.2 0 0 1 2.4 0v5.6V7.2a1.2 1.2 0 0 1 2.4 0v7.3l-2.3 6z"/></symbol>
+    <symbol id="i-boot" viewBox="0 0 24 24"><path d="M7.5 3.5h5v10l6.4 2.4c1 .4 1.6 1.3 1.6 2.4v1.7H6.5z"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 17V11M12 17V6M17 17v-8"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.4-6 8-6s7 2 8 6"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2.5l2.2 7.3 7.3 2.2-7.3 2.2-2.2 7.3-2.2-7.3L2.5 12l7.3-2.2z"/></symbol>
+    <symbol id="i-anvil" viewBox="0 0 24 24"><path d="M3 7h13c0 2.5 2 4 5 4-1.8 1.5-4.5 2-7 2v2h-4v-2C6.5 13 4 10.5 3 7z"/><path d="M7 20h10M10 15v5M14 15v5"/></symbol>
+    <symbol id="i-hammer" viewBox="0 0 24 24"><path d="M4 20l9.3-9.3"/><path d="M11.2 8.8l3.4-3.4 4 4-3.4 3.4z"/><path d="M14.6 5.4l1.6-2 3.4 1.8-1 2.2"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V3.5M5 4h12l-2.5 4L17 12H5"/></symbol>
+    <symbol id="i-castle" viewBox="0 0 24 24"><path d="M4 20.5V9h2.5v2H9V9h2v2h2V9h2v2h2.5V9H20v11.5z"/><path d="M10 20.5v-4a2 2 0 0 1 4 0v4"/><path d="M12 3.5v5.5M12 3.5l3 1.1-3 1.1"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.4 11.2a1.5 1.5 0 0 1-1.5 1.3H7.9a1.5 1.5 0 0 1-1.5-1.3z"/><path d="M4 8h16"/><path d="M8.5 8a3.5 3.5 0 0 1 7 0"/><path d="M6 13h12M6.6 17h10.8"/></symbol>
+    <symbol id="i-scroll" viewBox="0 0 24 24"><path d="M7 4h10a2 2 0 0 1 2 2v12"/><path d="M7 4a2 2 0 0 0-2 2v1h3"/><path d="M8 6v12a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1h-9v1a2 2 0 0 1-2 2"/><path d="M11 9h5M11 12.5h5"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10 5 7 4.5 4 5v13.5c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V20"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-hook" viewBox="0 0 24 24"><path d="M14 3v10.5a4.5 4.5 0 0 1-9 0V12"/><path d="M5 12l-1.8 2"/><circle cx="14" cy="3" r="1.2"/></symbol>
+    <symbol id="i-fish" viewBox="0 0 24 24"><path d="M3 12c3-4.5 9-6 14-2.5l3.5-2.5v10l-3.5-2.5C12 18 6 16.5 3 12z"/><circle cx="7.5" cy="11" r=".8" fill="currentColor"/></symbol>
+    <symbol id="i-rod" viewBox="0 0 24 24"><path d="M4 20L18 4"/><path d="M18 4v11"/><circle cx="18" cy="16.5" r="1.5"/><circle cx="7" cy="17" r="1.8"/></symbol>
+    <symbol id="i-chest" viewBox="0 0 24 24"><path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v9H4z"/><path d="M4 11h16"/><rect x="10.5" y="9.5" width="3" height="4" rx=".6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9l-5.3 2.7 1-5.8L3.5 9.7l5.9-.9z"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 12.5V4.5h8l9 9-8 8z"/><circle cx="8" cy="9" r="1.4"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5a4 4 0 0 0-2-2z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5.5" y="10.5" width="13" height="9.5" rx="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-3.9 0-6.5-2.6-6.5-6.2 0-3.6 3.2-5.3 3.8-9.3 2.6 1.4 3.6 3.6 3.6 5.6 1.1-.6 1.8-1.8 2-3 2 1.9 3.6 4.4 3.6 6.8 0 3.5-2.7 6.1-6.5 6.1z"/></symbol>
+    <symbol id="i-anchor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v13M8 10.5h8"/><path d="M4.5 13.5a7.5 7.5 0 0 0 15 0"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 9c2.2-2 4.3-2 6.5 0s4.3 2 6.5 0 3.3-2 5 0"/><path d="M3 15c2.2-2 4.3-2 6.5 0s4.3 2 6.5 0 3.3-2 5 0"/></symbol>
+    <symbol id="i-clover" viewBox="0 0 24 24"><path d="M12 12c-4-1-6-3-5-5.5S11 5 12 8c1-3 4-4 5-1.5S16 11 12 12zm0 0c1 4 3 6 5.5 5S19 13 16 12c3-1 4-4 1.5-5"/><path d="M12 12l-3 8"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9.5L5.5 4h13L20 9.5"/><path d="M4 9.5a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0"/><path d="M5.5 11.5V20h13v-8.5"/><path d="M10 20v-4.5h4V20"/></symbol>
+    <symbol id="i-pot" viewBox="0 0 24 24"><path d="M5 10h14v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M3 10h18"/><path d="M9 7c0-1 1-1.5 1-2.5M13.5 7c0-1 1-1.5 1-2.5"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10"/><path d="M5 8h14"/><path d="M5 8l-2.5 6a3 3 0 0 0 5 0z"/><path d="M19 8l-2.5 6a3 3 0 0 0 5 0z"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></symbol>
+    <linearGradient id="bc-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#24505a"/><stop offset="1" stop-color="#0e1e24"/></linearGradient>
+    <linearGradient id="bc-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></linearGradient>
+    <radialGradient id="bc-glow"><stop offset="0" stop-color="#ffc070" stop-opacity=".9"/><stop offset=".4" stop-color="#ffb060" stop-opacity=".35"/><stop offset="1" stop-color="#ffb060" stop-opacity="0"/></radialGradient>
+    <radialGradient id="bc-glowW"><stop offset="0" stop-color="#fff0c0" stop-opacity=".9"/><stop offset=".4" stop-color="#ffe6a0" stop-opacity=".35"/><stop offset="1" stop-color="#ffe6a0" stop-opacity="0"/></radialGradient>
+    <linearGradient id="bc-beam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffe6a0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe6a0" stop-opacity="0"/></linearGradient>
+    <linearGradient id="bc-beamL" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe6a0" stop-opacity=".3"/><stop offset="1" stop-color="#ffe6a0" stop-opacity="0"/></linearGradient>
+    <!-- sahneler (js/liman.js) -->
+    <radialGradient id="sc-glow"><stop offset="0" stop-color="#ffd890" stop-opacity=".85"/><stop offset=".45" stop-color="#ffb860" stop-opacity=".3"/><stop offset="1" stop-color="#ffb860" stop-opacity="0"/></radialGradient>
+    <radialGradient id="sc-sun"><stop offset="0" stop-color="#fff6d8"/><stop offset=".25" stop-color="#ffe6a8" stop-opacity=".9"/><stop offset=".5" stop-color="#ffd27a" stop-opacity=".3"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="sc-moon"><stop offset="0" stop-color="#dfe8ff" stop-opacity=".5"/><stop offset="1" stop-color="#dfe8ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="sc-seaD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fa3a6"/><stop offset=".35" stop-color="#3d7f8a"/><stop offset="1" stop-color="#1f4c5c"/></linearGradient>
+    <linearGradient id="sc-seaN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a4660"/><stop offset=".4" stop-color="#172c44"/><stop offset="1" stop-color="#0b1626"/></linearGradient>
+    <linearGradient id="sc-beam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff0c0" stop-opacity="0"/><stop offset=".5" stop-color="#fff0c0" stop-opacity=".55"/><stop offset="1" stop-color="#fff0c0" stop-opacity="0"/></linearGradient>
+  </defs>
+</svg>
+
+<div class="bgfx" aria-hidden="true"><i class="haze" style="left:-30%;top:-10%;width:90%;height:50%;background:rgba(80,100,90,.12)"></i><i class="haze" style="right:-30%;bottom:10%;width:80%;height:40%;background:rgba(160,120,60,.08)"></i><i class="vignette"></i></div>
+
+<div id="app" class="app">
+
+  <!-- ÜST HUD: dinamik ada -->
+  <header class="hud">
+    <div class="island" id="island">
+      <div class="isl-compact" id="islCompact">
+        <button class="isl-pilot" id="pilotBtn" aria-label="Envanter">
+          <svg class="xp-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" class="xr-bg"/><circle cx="20" cy="20" r="18" class="xr-fg" id="hudXpRing"/></svg>
+          <svg class="ic emb"><use id="hudEmb" href="#i-pick"/></svg>
+          <span class="lvl num" id="hudLvl">1</span>
+        </button>
+        <span class="isl-name" id="hudName">Gezgin</span>
+        <i class="isl-div"></i>
+        <button class="cur" id="curSilver" aria-label="Gümüş"><svg class="hc-coin" aria-hidden="true"><use href="#g-coin"/></svg><span class="num" id="hudSilver">0</span></button>
+        <i class="isl-div"></i>
+        <button class="cur pearl" id="curPearl" aria-label="İnci"><svg class="hc-coin" aria-hidden="true"><use href="#g-pearl"/></svg><span class="num" id="hudPearl">0</span></button>
+      </div>
+      <div class="isl-act" id="islAct"></div>
+      <div class="isl-det" id="islDet"></div>
+      <i class="isl-grab" aria-hidden="true"></i>
+    </div>
+  </header>
+
+  <!-- SAHNE -->
+  <main class="stage" id="stage">
+    <section class="city-view view on" id="cityView">
+      <div class="lm" id="cityGrid"></div>
+    </section>
+
+    <section class="world-view view" id="worldView" aria-hidden="true">
+      <div class="lm wm" id="worldMap"></div>
+    </section>
+
+    <section class="field-view view" id="fieldView" aria-hidden="true">
+      <div class="sea-stage fr" id="fieldStage">
+        <div class="mv" id="fieldMap"></div>
+        <span class="sv-chip sv-name"><b id="fdName">—</b><i class="sv-sep"></i><span id="fdTier">—</span></span>
+        <span class="sv-chip sv-time" id="fdTime"></span>
+        <div class="sv-bar">
+          <button class="chip chip-btn" id="fdMap"><svg class="ic"><use href="#i-back"/></svg>Haritaya bak</button>
+          <button class="chip chip-btn" id="fdTiers"><svg class="ic"><use href="#i-grid"/></svg>Sahalar</button>
+          <button class="chip chip-btn sv-port" id="fdCity"><svg class="ic"><use href="#i-home"/></svg>Şehre dön</button>
+        </div>
+        <div class="fv-float" id="fdFloat"></div>
+        <div class="fv-tip" id="fdTip"></div>
+      </div>
+      <nav class="fv-bar" id="fdBar">
+        <button class="fb" id="fdBag" aria-label="Sandık"><span class="fb-ic fd-res" id="fdBagIc"></span><small><b class="num" id="fdBagN">0</b> envanterde</small></button>
+        <button class="fb" id="fdStop" aria-label="Durdur"><span class="fb-ic"><svg class="ic"><use href="#i-stop"/></svg></span><small>Durdur</small></button>
+        <button class="pull" id="fdPull" aria-label="Topla">
+          <svg class="pull-ring" viewBox="0 0 80 80"><circle cx="40" cy="40" r="36" class="r0"/><circle cx="40" cy="40" r="36" class="r1" id="fdRing"/></svg>
+          <span class="pull-in"><svg class="ic"><use href="#i-bolt"/></svg><b id="fdTxt">Başla</b></span>
+        </button>
+        <button class="fb" id="fdTool" aria-label="Alet"><span class="fb-ic fd-res" id="fdToolIc"></span><small id="fdToolT">Alet</small></button>
+        <button class="fb" id="fdInfo" aria-label="Envanter"><span class="fb-ic"><svg class="ic"><use href="#i-bag"/></svg></span><small>Envanter</small></button>
+      </nav>
+    </section>
+
+    <section class="areas-view view" id="areasView" aria-hidden="true">
+      <div class="ar-ban"><span class="ar-art" id="arArt"></span>
+        <header class="ar-head new"><span class="ar-title"><i></i><b>İzinli avlanma alanları</b><i></i></span></header>
+        <div class="bv-top">
+          <button class="icon-btn" id="arBack" aria-label="Geri"><svg class="ic"><use href="#i-back"/></svg></button>
+          <b class="bv-name">Denizler</b>
+          <span class="chip"><svg class="ic"><use href="#i-clock"/></svg>Yeni alan <b class="num" id="arNext">—</b></span>
+        </div>
+      </div>
+      <button class="ar-here" id="arHere" hidden></button>
+      <div class="ar-grid" id="hexes"></div>
+      <div class="ar-rod hb-rod" id="arRod"></div>
+    </section>
+
+    <section class="sea-view view" id="seaView" aria-hidden="true">
+      <div class="sea-stage fr">
+        <div class="mv" id="seaMap"></div>
+        <span class="sv-chip sv-name"><b id="svName">—</b><i class="sv-sep"></i><span id="svTier">—</span></span>
+        <span class="sv-chip sv-time" id="svTime"></span>
+        <span class="sv-chip sv-permit" id="svPermit" hidden></span><span class="sv-chip sv-info" id="svInfo" hidden></span>
+        <div class="sv-bar">
+          <button class="chip chip-btn" id="svBack"><svg class="ic"><use href="#i-back"/></svg>Şehre bak</button>
+          <button class="chip chip-btn" id="svAreas"><svg class="ic"><use href="#i-grid"/></svg>Alanlar</button>
+          <button class="chip chip-btn sv-port" id="svPort"><svg class="ic"><use href="#i-anchor"/></svg>Limana dön</button>
+        </div>
+        <div class="fv-float" id="fvFloat"></div>
+        <div class="fv-combo" id="fvCombo"><b class="num">×0</b><small>seri</small></div>
+        <div class="fv-full" id="fvFull"><b>Envanter dolu</b><small>Balıkları Hal'de sat ya da eşyaları azalt</small><button class="btn primary" data-open="hal">Hal'e git</button></div>
+        <div class="fv-tip" id="fvTip"></div>
+        <div class="fight" id="fight" hidden></div>
+      </div>
+      <nav class="fv-bar" id="fvBar">
+        <button class="fb" id="fbBag" aria-label="Ambar"><span class="fb-ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" class="r0"/><circle cx="20" cy="20" r="17" class="r1" id="fbBagRing"/></svg><svg class="ic"><use href="#i-bag"/></svg></span><small class="num" id="fbBagKg">0 kg</small></button>
+        <button class="fb" id="fbStop" aria-label="Durdur"><span class="fb-ic"><svg class="ic"><use href="#i-stop"/></svg></span><small>Durdur</small></button>
+        <button class="pull" id="pullBtn" aria-label="Çek">
+          <svg class="pull-ring" viewBox="0 0 80 80"><circle cx="40" cy="40" r="36" class="r0"/><circle cx="40" cy="40" r="36" class="r1" id="pullRing"/></svg>
+          <span class="pull-in"><svg class="ic"><use href="#i-hook"/></svg><b id="pullTxt">Bekle</b></span>
+        </button>
+        <button class="fb" id="fbFood" aria-label="Yemek"><span class="fb-ic"><svg class="ic"><use href="#i-pot"/></svg></span><small id="fbFoodT">Yemek</small></button>
+        <button class="fb" id="fbInfo" aria-label="Olasılıklar"><span class="fb-ic"><svg class="ic"><use href="#i-info"/></svg></span><small>Olasılık</small></button>
+      </nav>
+    </section>
+
+    <section class="trip" id="trip" aria-hidden="true">
+      <div class="tp-card fr">
+        <span class="eyebrow" id="tpTitle">Yolculuk</span>
+        <div class="tp-road">
+          <span class="tp-pt" id="tpFrom"></span>
+          <svg class="tp-svg" viewBox="0 0 160 64" aria-hidden="true">
+            <path d="M6 44C40 44 46 14 80 22S124 52 154 24" class="tp-sea"/>
+            <path id="tpPath" d="M6 44C40 44 46 14 80 22S124 52 154 24" fill="none" stroke="none"/>
+            <path d="M6 44C40 44 46 14 80 22S124 52 154 24" class="tp-base"/>
+            <path id="tpFill" d="M6 44C40 44 46 14 80 22S124 52 154 24" class="tp-fill"/>
+            <g id="tpMe" transform="translate(6 44)"><path d="M0 -9Q5 -4 4 7Q0 9 -4 7Q-5 -4 0 -9Z" fill="#8a6038" stroke="#3a2614" stroke-width=".8"/><path d="M0 -6L0 3" stroke="#3a2614" stroke-width=".8"/><path d="M0 -5Q5 -2 0 2Z" fill="#efe6cf"/></g>
+          </svg>
+          <span class="tp-pt" id="tpTo"></span>
+        </div>
+        <div class="tp-foot"><b class="num" id="tpLeft">5</b><small>sn</small><button class="btn ghost tp-x" id="tpCancel">Vazgeç</button></div>
+      </div>
+    </section>
+  </main>
+
+  <button class="dev-btn" id="devBtn" aria-label="Geliştirici paneli"><svg class="ic"><use href="#i-wrench"/></svg><b>DEV</b></button>
+
+  <!-- ALT DOK: solda defter, ortada etkiler, sağda açılan gezinti -->
+  <nav class="dock" id="dock">
+    <button class="cbtn" id="bookBtn" aria-label="Balık Defteri"><span class="cb-ic"><svg class="ic"><use href="#i-book"/></svg></span><b class="cb-n num" id="bookN"></b></button>
+    <div class="buffs" id="buffs" aria-label="Etkiler"></div>
+    <div class="bf-tip" id="bfTip" role="status" aria-live="polite"></div>
+    <div class="nav" id="nav">
+      <div class="nav-items">
+        <button class="nv" data-nav="home" style="--i:1"><svg class="ic"><use href="#i-home"/></svg><span>Şehir</span></button>
+        <button class="nv" data-nav="inv" style="--i:0"><svg class="ic"><use href="#i-bag"/></svg><span>Envanter</span></button>
+      </div>
+      <div class="nav-up">
+        <button class="nv nv-q" data-nav="quests" style="--i:1"><svg class="ic"><use href="#i-scroll"/></svg><span>Görevler</span><b class="nv-dot" id="qDot"></b></button>
+        <button class="nv nv-menu" data-nav="menu" style="--i:0"><span class="nvm-ic"><svg class="ic"><use href="#i-grid"/></svg></span><span>Menü</span></button>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Gezinti" aria-expanded="false"><span class="mb-ring"></span><span class="mb-lines"><i></i><i></i><i></i></span></button>
+    </div>
+  </nav>
+
+  <!-- PENCERE -->
+  <div class="sheet-layer" id="sheetLayer" aria-hidden="true">
+    <div class="sheet-bg" id="sheetBg"></div>
+    <div class="sheet" id="sheet">
+      <div class="sheet-in fr" id="sheetIn"></div>
+    </div>
+  </div>
+
+  <!-- ANA MENÜ (tam ekran) -->
+  <div class="menu-layer" id="menuLayer" aria-hidden="true">
+    <div class="menu-bg" id="menuBg"></div>
+    <div class="menu-win">
+      <div class="mw-main" id="mwMain"></div>
+      <nav class="mw-rail">
+        <button class="mw-close" id="mwClose" aria-label="Kapat"><svg class="ic"><use href="#i-close"/></svg></button>
+        <i class="mw-rl"></i>
+        <button class="mw-ico" data-open="rehber" aria-label="Rehber"><svg class="ic"><use href="#i-book"/></svg></button>
+        <button class="mw-ico" data-open="ayar" aria-label="Ayarlar"><svg class="ic"><use href="#i-wrench"/></svg></button>
+        <span class="mw-brand">DERİNSU</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- İLK GİRİŞ -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="in-card fr">
+      <canvas id="introCv"></canvas>
+      <div class="in-body">
+        <span class="eyebrow"><i class="pin"></i>Yeni balıkçı</span>
+        <h1>Derinsu</h1>
+        <p>Derinsu Limanı'nda eski bir söğüt oltası ve küçük bir kayık seni bekliyor. İskeleden izinli bir alana açıl, balık sürüsüne yanaş; olta kendi atar, sen istersen tam vurgunda çekersin.</p>
+        <label class="in-name"><small>Balıkçı adı</small><input id="introName" maxlength="14" placeholder="Balıkçı" autocomplete="off"></label>
+        <button class="btn primary wide" id="introGo">İskeleye in<svg class="ic"><use href="#i-chev"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/itemFrame.js"></script>
+<script src="js/notices.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/nodeart.js"></script>
+<script src="js/map.js"></script>
+<script src="js/cityart.js"></script>
+<script src="js/atolye.js"></script>
+<script src="js/shipart.js"></script>
+<script src="js/hero.js"></script>
+<script src="js/landnode.js"></script>
+<script src="js/liman.js"></script>
+<script src="js/dunya.js"></script>
+<script src="js/gemi.js"></script>
+<script src="js/esyakart.js"></script>
+<script src="js/ticaret.js"></script>
+<script src="js/oyun.js"></script>
+<script src="js/sehir/kit.js"></script>
+<script src="js/sehir/esya.js"></script>
+<!--SEHIR-YAPILAR-->
+<script src="js/sehir/y-cesme.js"></script>
+<script src="js/sehir/y-ciftlik.js"></script>
+<script src="js/sehir/y-dam.js"></script>
+<script src="js/sehir/y-degirmen.js"></script>
+<script src="js/sehir/y-demirci.js"></script>
+<script src="js/sehir/y-depo.js"></script>
+<script src="js/sehir/y-dukkan.js"></script>
+<script src="js/sehir/y-ev.js"></script>
+<script src="js/sehir/y-fenerk.js"></script>
+<script src="js/sehir/y-gemi.js"></script>
+<script src="js/sehir/y-hal.js"></script>
+<script src="js/sehir/y-hamam.js"></script>
+<script src="js/sehir/y-isleme.js"></script>
+<script src="js/sehir/y-kahve.js"></script>
+<script src="js/sehir/y-kapi.js"></script>
+<script src="js/sehir/y-kemer.js"></script>
+<script src="js/sehir/y-kopru.js"></script>
+<script src="js/sehir/y-kule.js"></script>
+<script src="js/sehir/y-kulube.js"></script>
+<script src="js/sehir/y-lonca.js"></script>
+<script src="js/sehir/y-pano.js"></script>
+<script src="js/sehir/y-saat.js"></script>
+<script src="js/sehir/y-sadirvan.js"></script>
+<script src="js/sehir/y-tekne.js"></script>
+<script src="js/sehir/y-tersane.js"></script>
+<script src="js/sehir/y-ticaret.js"></script>
+<script src="js/sehir/y-vinc.js"></script>
+<script src="js/sehir/y-zanaat.js"></script>
+<!--/SEHIR-YAPILAR-->
+<script src="js/sehir/plan.js"></script>
+<script src="js/sehir/canli.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

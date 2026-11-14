@@ -1,0 +1,159 @@
+/* Derinsu — şehir sahnesi: kaydırılan dünya, katmanlar, canlandırmalar, etiketler.
+   Renkler burada değil: çizim seti (js/sehir/kit.js) her rengin gündüz ve gece karşılığını ayrı bir <style> içinde üretir. */
+
+/* ---------- görüş alanı ve dünya ---------- */
+.cw { position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: grab; background: #2a7f9c; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; transition: background 1.2s; }
+body.night .cw { background: #1c3c60; }
+.cw.drag { cursor: grabbing; }
+.cw-world { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.cw-g, .cw-s { position: absolute; left: 0; top: 0; display: block; overflow: hidden; pointer-events: none; }
+.cw-s { transform: translateZ(0); }
+.cw-s .cw-b { pointer-events: auto; cursor: pointer; }
+.cw-lo, .cw-hi, .cw-tags { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
+.cw svg { overflow: visible; }
+.cw .cw-g, .cw .cw-s { overflow: hidden; }
+
+/* ---------- canlandırılan öğeler: hepsi yalnız transform ve opacity ile kıpırdar ---------- */
+.cf, .cs, .cwm { position: absolute; left: 0; top: 0; width: 0; height: 0; display: block; pointer-events: none; font-style: normal; }
+.cf svg, .cs svg, .cwm svg, .cf span { position: absolute; display: block; }
+.cf span { left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
+.cwm { will-change: transform; }
+.cwm > i { position: absolute; left: 0; top: 0; width: 0; height: 0; display: block; font-style: normal; }
+
+/* duman, buhar */
+.cf-smoke b { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%; background: rgba(238, 233, 222, .8); opacity: 0; animation: cfSmoke 5.4s linear infinite; }
+.cf-smoke b:nth-child(2) { animation-delay: -1.8s; } .cf-smoke b:nth-child(3) { animation-delay: -3.6s; }
+.cf-steam b { background: rgba(255, 255, 255, .85); animation-duration: 3.6s; } .cf-steam b:nth-child(2) { animation-delay: -1.2s; } .cf-steam b:nth-child(3) { animation-delay: -2.4s; }
+body.night .cf-smoke b { background: rgba(150, 164, 200, .55); }
+@keyframes cfSmoke { 0% { opacity: 0; transform: translate(0, 0) scale(calc(var(--s, 1) * .45)); } 14% { opacity: .75; } 60% { opacity: .4; } 100% { opacity: 0; transform: translate(calc(var(--s, 1) * 15px), calc(var(--s, 1) * -44px)) scale(calc(var(--s, 1) * 2.5)); } }
+
+/* ateş: üç alev dili + hâle */
+.cf-fire b { position: absolute; left: calc(var(--s, 1) * -4px); bottom: 0; width: calc(var(--s, 1) * 8px); height: calc(var(--s, 1) * 14px); border-radius: 50% 50% 46% 46% / 68% 68% 32% 32%; background: #ff7d24; transform-origin: 50% 100%; animation: cfFlame .58s ease-in-out var(--d, 0s) infinite alternate; }
+.cf-fire b:nth-child(3) { left: calc(var(--s, 1) * -2.6px); width: calc(var(--s, 1) * 5.2px); height: calc(var(--s, 1) * 9.5px); background: #ffc04a; animation-duration: .44s; }
+.cf-fire b:nth-child(4) { left: calc(var(--s, 1) * -1.3px); width: calc(var(--s, 1) * 2.6px); height: calc(var(--s, 1) * 5px); background: #fff3c0; animation-duration: .37s; }
+.cf-fire u { position: absolute; left: calc(var(--s, 1) * -24px); top: calc(var(--s, 1) * -32px); width: calc(var(--s, 1) * 48px); height: calc(var(--s, 1) * 48px); border-radius: 50%; background: radial-gradient(circle, rgba(255, 190, 90, .6), rgba(255, 150, 40, 0) 68%); opacity: .42; animation: cfGlow 1.1s ease-in-out var(--d, 0s) infinite alternate; }
+body.night .cf-fire u { opacity: 1; }
+@keyframes cfFlame { from { transform: scale(1, .82) skewX(-5deg); } to { transform: scale(.86, 1.12) skewX(6deg); } }
+@keyframes cfGlow { from { transform: scale(.9); } to { transform: scale(1.12); } }
+
+/* kıvılcım */
+.cf-sparks b { position: absolute; left: -1px; top: -1px; width: 2px; height: 2px; border-radius: 50%; background: #ffd27a; opacity: 0; animation: cfSpark 1.5s ease-out infinite; }
+.cf-sparks b:nth-child(1) { --x: -9px; --y: -12px; } .cf-sparks b:nth-child(2) { --x: 8px; --y: -15px; animation-delay: -.2s; } .cf-sparks b:nth-child(3) { --x: 12px; --y: -6px; animation-delay: -.75s; } .cf-sparks b:nth-child(4) { --x: -4px; --y: -18px; animation-delay: -.95s; }
+@keyframes cfSpark { 0%, 62% { opacity: 0; transform: translate(0, 0); } 66% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--x), var(--y)); } }
+
+/* parıltı */
+.cf-glint svg { left: -5px; top: -5px; opacity: 0; animation: cfGlint 4.6s ease-in-out var(--d, 0s) infinite; }
+@keyframes cfGlint { 0%, 70% { opacity: 0; transform: scale(.2) rotate(0deg); } 82% { opacity: 1; transform: scale(1) rotate(40deg); } 100% { opacity: 0; transform: scale(.2) rotate(90deg); } }
+
+/* flama, sancak */
+.cf-flag svg { transform-origin: 0 35%; animation: cfFlag 1.5s ease-in-out var(--d, 0s) infinite alternate; }
+@keyframes cfFlag { from { transform: skewY(-6deg) scaleX(1); } to { transform: skewY(7deg) scaleX(.88); } }
+.cf-ban svg { transform-origin: 50% 0; animation: cfBan 3.2s ease-in-out var(--d, 0s) infinite alternate; }
+@keyframes cfBan { from { transform: skewX(-4deg); } to { transform: skewX(4deg) scaleY(.97); } }
+
+/* dönen çark ve değirmen kanadı */
+.cf-spin svg { transform-origin: 50% 50%; animation: cfSpin var(--d, 10s) linear infinite; }
+@keyframes cfSpin { to { transform: rotate(360deg); } }
+
+/* fıskiye: süzülen damlalar */
+.cf-fount svg { animation: cfJet 1.1s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+.cf-fount b { position: absolute; left: -1px; top: -1px; width: 2px; height: 2px; border-radius: 50%; background: #f2fbfa; animation: cfDrop 1.2s linear infinite; }
+.cf-fount b:nth-child(2) { --x: -9px; } .cf-fount b:nth-child(3) { --x: 9px; animation-delay: -.4s; } .cf-fount b:nth-child(4) { --x: 3px; animation-delay: -.8s; }
+@keyframes cfJet { from { transform: scaleY(.92); } to { transform: scaleY(1.06); } }
+@keyframes cfDrop { 0% { opacity: 0; transform: translate(0, calc(var(--h, 20px) * -1)); } 15% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--x, 6px), 0); } }
+
+/* akan su perdesi */
+.cf-fall { overflow: hidden; border-radius: 1px; }
+.cf-fall b { position: absolute; left: 0; right: 0; top: -100%; height: 200%; background: repeating-linear-gradient(180deg, rgba(255, 255, 255, .92) 0 3px, rgba(176, 226, 232, .75) 3px 8px, rgba(255, 255, 255, .6) 8px 10px, rgba(150, 210, 222, .7) 10px 16px); animation: cfFall .8s linear infinite; }
+.cf-fall u { position: absolute; left: -3px; right: -3px; bottom: -3px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, .85); animation: cfGlow .5s ease-in-out infinite alternate; }
+@keyframes cfFall { to { transform: translateY(50%); } }
+
+/* fener ışını: gece, yer düzleminde döner */
+.cf-beam b { position: absolute; left: 0; top: 0; display: block; transform-origin: 0 50%; background: linear-gradient(90deg, rgba(255, 238, 176, .55), rgba(255, 238, 176, 0)); clip-path: polygon(0 50%, 100% 0, 100% 100%); animation: cfSpin 11s linear infinite; }
+body:not(.night) .cf-beam { display: none; }
+
+/* çan */
+.cf-bell svg { transform-origin: 50% 0; animation: cfBell 7s ease-in-out var(--d, 0s) infinite; }
+@keyframes cfBell { 0%, 70%, 100% { transform: rotate(0); } 74% { transform: rotate(16deg); } 80% { transform: rotate(-14deg); } 86% { transform: rotate(10deg); } 92% { transform: rotate(-6deg); } }
+
+/* güvercinler: dokununca uçar, sonra döner */
+.cf-birds { pointer-events: auto; }
+.cf-birds::before { content: ''; position: absolute; left: -22px; top: -18px; width: 44px; height: 30px; }
+.cf-birds b { position: absolute; display: block; }
+.cf-birds svg { transform-origin: 30% 100%; animation: cfPeck 3.1s ease-in-out var(--d, 0s) infinite; }
+.cf-birds svg.flip { scale: -1 1; }
+.cf-birds.fly b { animation: cfFly 5.4s ease-in forwards; }
+.cf-birds.fly svg { animation: cfWing .16s ease-in-out infinite alternate; }
+@keyframes cfPeck { 0%, 78%, 100% { transform: rotate(0); } 84% { transform: rotate(24deg); } 90% { transform: rotate(0); } 95% { transform: rotate(22deg); } }
+@keyframes cfFly { 0% { opacity: 1; transform: translate(0, 0); } 16% { opacity: 0; transform: translate(var(--fx), var(--fy)); } 84% { opacity: 0; transform: translate(calc(var(--fx) * -.6), calc(var(--fy) * .8)); } 100% { opacity: 1; transform: translate(0, 0); } }
+@keyframes cfWing { from { transform: scaleY(1); } to { transform: scaleY(.3); } }
+
+/* deniz parıltısı, kıyı dalgası, bulut gölgesi, kelebek, ateş böceği */
+.cf-sea { width: 9px; height: 2px; margin: -1px 0 0 -4px; border-radius: 2px; background: #fff; opacity: 0; animation: cfSea 4.2s ease-in-out var(--d, 0s) infinite; }
+@keyframes cfSea { 0%, 100% { opacity: 0; transform: translateX(-3px) scaleX(.5); } 50% { opacity: .85; transform: translateX(3px) scaleX(1); } }
+.cf-wave { height: 2.4px; border-radius: 2px; background: rgba(255, 255, 255, .9); opacity: 0; transform-origin: 50% 50%; animation: cfWave 5.2s ease-in-out var(--d, 0s) infinite; }
+@keyframes cfWave { 0% { opacity: 0; transform: translate(-7px, 5px) scaleX(.6); } 45% { opacity: .9; transform: translate(0, 0) scaleX(1); } 100% { opacity: 0; transform: translate(5px, -3px) scaleX(1.15); } }
+.cf-cloud { width: var(--w, 320px); height: calc(var(--w, 320px) * .42); border-radius: 50%; background: radial-gradient(ellipse, rgba(24, 34, 70, .17), rgba(24, 34, 70, 0) 70%); animation: cfCloud 190s linear var(--d, 0s) infinite; }
+@keyframes cfCloud { from { transform: translate(-500px, -120px); } to { transform: translate(2600px, 260px); } }
+.cf-bfly { width: 4px; height: 3px; margin: -2px; border-radius: 50% 50% 40% 40%; background: var(--c, #fff); animation: cfBfly 7s ease-in-out var(--d, 0s) infinite alternate; }
+@keyframes cfBfly { 0% { transform: translate(0, 0) scaleX(1); } 20% { transform: translate(calc(var(--x) * .5), calc(var(--y) * .7)) scaleX(.3); } 40% { transform: translate(var(--x), var(--y)) scaleX(1); } 60% { transform: translate(calc(var(--x) * .2), calc(var(--y) * 1.3)) scaleX(.3); } 80% { transform: translate(calc(var(--x) * -.6), calc(var(--y) * .5)) scaleX(1); } 100% { transform: translate(calc(var(--x) * -.2), 0) scaleX(.4); } }
+.cf-fly { width: 3px; height: 3px; margin: -1.5px; border-radius: 50%; background: #e9ff9a; box-shadow: 0 0 6px 2px rgba(220, 255, 140, .7); opacity: 0; animation: cfFly2 6.5s ease-in-out var(--d, 0s) infinite; }
+@keyframes cfFly2 { 0%, 100% { opacity: 0; transform: translate(0, 0); } 25% { opacity: 1; } 50% { opacity: .2; transform: translate(var(--x), var(--y)); } 75% { opacity: 1; } }
+body.night .cf-cloud, body.night .cf-bfly, body:not(.night) .cf-fly { display: none; }
+
+/* yürüyenler: iki karelik adım */
+.cwk svg { left: -10px; top: -28px; }
+.cwk .fa { animation: cwFa .52s steps(1) infinite; } .cwk .fb { animation: cwFb .52s steps(1) infinite; }
+@keyframes cwFa { 0% { opacity: 1; } 50% { opacity: 0; } } @keyframes cwFb { 0% { opacity: 0; } 50% { opacity: 1; } }
+/* martı: gövde havada, gölgesi yerde */
+.cwb-b { left: -8px; top: -46px; transform-origin: 50% 40%; animation: cfWing .46s ease-in-out infinite alternate; }
+.cwb-sh { position: absolute; left: -5px; top: -2px; width: 10px; height: 4px; border-radius: 50%; background: rgba(20, 30, 60, .22); }
+
+/* tekneler: suda salınır */
+.cs-bob { transform-origin: 50% 80%; animation: cfBob var(--t, 4.2s) ease-in-out var(--d, 0s) infinite alternate; }
+@keyframes cfBob { from { transform: translateY(-1px) rotate(-.9deg); } to { transform: translateY(1.4px) rotate(.9deg); } }
+.cw-ship { pointer-events: auto; cursor: pointer; }
+.cw-moor { width: 9px; height: 9px; margin: -5px; border-radius: 50%; background: #c0503c; box-shadow: 0 0 0 1.5px #f6f0e2; animation: cfBob 3.2s ease-in-out infinite alternate; }
+
+/* denize dokununca yayılan halka */
+.cw-rip { width: 64px; height: 32px; margin: -16px 0 0 -32px; border-radius: 50%; border: 1.5px solid rgba(240, 250, 250, .9); opacity: 0; animation: cwRip 1s ease-out forwards; }
+.cw-rip.b { animation-delay: .18s; }
+@keyframes cwRip { from { opacity: .9; transform: scale(.15); } to { opacity: 0; transform: scale(1.1); } }
+
+/* ---------- etiketler ---------- */
+.cw-tag { position: absolute; display: flex; align-items: center; gap: 5px; padding: 4px 10px 4.5px 8px; border-radius: 99px; white-space: nowrap; pointer-events: auto; cursor: pointer; transform: translate(-50%, -50%) scale(var(--iz, 1));
+  background: rgba(16, 13, 11, .88); box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px rgba(231, 194, 106, .38), 0 5px 10px -5px #000; }
+.cw-tag .ic { font-size: 11px; color: var(--gold); flex: none; }
+.cw-tag b { font: 700 9.5px/1 var(--fs); letter-spacing: .06em; color: var(--title); }
+.cw-tag.has { box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px var(--gold), 0 0 14px -3px rgba(231, 194, 106, .75); }
+.cw-tag .lm-dot { right: -2px; top: -3px; }
+.cw-tag:active { transform: translate(-50%, -50%) scale(calc(var(--iz, 1) * .93)); }
+
+/* ---------- kenar işaretleri: görünmeyen yapıda bekleyen iş ---------- */
+.cw-ind { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.cw-go { position: absolute; width: 30px; height: 30px; margin: -15px; padding: 0; border-radius: 50%; display: grid; place-items: center; pointer-events: auto; background: rgba(16, 13, 11, .9); box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px var(--gold), 0 0 12px -2px rgba(231, 194, 106, .7); animation: lmIn .4s var(--spring) both; }
+.cw-go.on { box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px #5fd36f, 0 0 12px -2px rgba(95, 211, 111, .7); }
+.cw-go .ic { font-size: 13px; color: var(--gold); } .cw-go.on .ic { color: #8fe89a; }
+.cw-go i { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+.cw-go i::after { content: ''; position: absolute; left: 17px; top: -4px; border: 4px solid transparent; border-left: 6px solid var(--gold); }
+.cw-go.on i::after { border-left-color: #5fd36f; }
+.cw-go:active { scale: .92; }
+
+/* ---------- gece-gündüz geçiş perdesi, meydana dön düğmesi ---------- */
+.cw-dusk { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; }
+.cw-dusk.to-night { background: #0c1632; animation: cwDusk 2.2s ease-out forwards; }
+.cw-dusk.to-day { background: #ffe9b8; animation: cwDusk 2s ease-out forwards; }
+@keyframes cwDusk { from { opacity: .62; } to { opacity: 0; } }
+.cw-home { position: absolute; z-index: 5; left: 12px; bottom: 13px; width: 32px; height: 32px; padding: 0; border-radius: 50%; display: grid; place-items: center; background: rgba(16, 13, 11, .86); box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px rgba(231, 194, 106, .4), 0 4px 10px -4px #000; transition: transform .25s var(--spring); }
+.cw-home .ic { font-size: 14px; color: var(--gold); }
+.cw-home:active { transform: scale(.9); }
+
+/* ---------- dokunuş halkası ---------- */
+.cw-ping { position: absolute; z-index: 5; width: 56px; height: 56px; margin: -28px; border-radius: 50%; border: 2px solid rgba(255, 240, 200, .95); pointer-events: none; animation: cwPing .5s ease-out forwards; }
+@keyframes cwPing { from { opacity: .95; transform: scale(.25); } to { opacity: 0; transform: scale(1.15); } }
+
+/* ---------- şehir ekranındaki sabit düğme ---------- */
+.lm > .lm-go { left: 50%; top: auto; bottom: 12px; z-index: 6; }
+.lm > .lm-go small { display: none; }
+.lm > .lm-top { z-index: 6; }
+

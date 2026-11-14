@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bg" cx="512" cy="420" r="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#26332f"/><stop offset=".55" stop-color="#141917"/><stop offset="1" stop-color="#0a0c0b"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff1c4"/><stop offset=".45" stop-color="#e7c26a"/><stop offset="1" stop-color="#9a7428"/>
+    </linearGradient>
+    <linearGradient id="goldH" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff3d0"/><stop offset=".5" stop-color="#e2b955"/><stop offset="1" stop-color="#8a6420"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f6462"/><stop offset=".5" stop-color="#1b3a3a"/><stop offset="1" stop-color="#0d1c1c"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff4cc" stop-opacity=".55"/><stop offset="1" stop-color="#fff4cc" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="disc"><circle cx="512" cy="512" r="368"/></clipPath>
+    <pattern id="lat" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M32 0L64 32L32 64L0 32Z" fill="none" stroke="#f5e6c4" stroke-opacity=".045" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#lat)"/>
+
+  <!-- madalyon içi: gece göğü, ay, deniz -->
+  <g clip-path="url(#disc)">
+    <rect x="144" y="144" width="736" height="736" fill="#172220"/>
+    <circle cx="350" cy="310" r="190" fill="url(#moon)"/>
+    <circle cx="350" cy="310" r="62" fill="#f4e3a8"/>
+    <circle cx="332" cy="292" r="11" fill="#e6cf8a" opacity=".6"/><circle cx="372" cy="330" r="7" fill="#e6cf8a" opacity=".5"/>
+    <g fill="#f4ead2" opacity=".75"><circle cx="560" cy="250" r="4"/><circle cx="760" cy="300" r="3"/><circle cx="500" cy="200" r="2.5"/><circle cx="800" cy="430" r="3"/><circle cx="230" cy="430" r="2.5"/></g>
+    <path d="M144 700 C 260 668 340 712 452 690 S 650 664 760 694 S 860 690 880 684 V 880 H 144 Z" fill="url(#sea)"/>
+    <path d="M144 742 C 270 716 360 756 480 736 S 690 712 880 740" fill="none" stroke="#e7c26a" stroke-opacity=".35" stroke-width="5" stroke-linecap="round"/>
+    <path d="M144 796 C 250 776 380 812 500 792 S 720 772 880 798" fill="none" stroke="#e7c26a" stroke-opacity=".2" stroke-width="4" stroke-linecap="round"/>
+    <!-- ay yansıması -->
+    <g fill="#f4e3a8" opacity=".45"><rect x="310" y="712" width="80" height="6" rx="3"/><rect x="326" y="730" width="52" height="5" rx="2.5"/><rect x="336" y="748" width="34" height="4" rx="2"/></g>
+  </g>
+
+  <!-- olta ipi ve iğne -->
+  <path d="M680 190 V 480" stroke="#efe4c8" stroke-opacity=".7" stroke-width="5"/>
+  <path d="M680 500 V 590 A 92 92 0 0 1 496 590 V 548" fill="none" stroke="#3a2a10" stroke-width="44" stroke-linecap="round"/>
+  <path d="M680 500 V 590 A 92 92 0 0 1 496 590 V 548" fill="none" stroke="url(#goldH)" stroke-width="30" stroke-linecap="round"/>
+  <path d="M496 548 L 532 600 L 496 586 Z" fill="url(#goldH)" stroke="#3a2a10" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="680" cy="492" r="20" fill="none" stroke="url(#goldH)" stroke-width="12"/>
+
+  <!-- sudan sıçrayan balık -->
+  <g transform="translate(400 486) rotate(-30) scale(.84)">
+    <path d="M-148 6 C -180 -18 -206 -48 -244 -74 C -236 -34 -230 -12 -218 6 C -230 24 -236 46 -244 86 C -206 60 -180 30 -148 6 Z" fill="url(#gold)" stroke="#3a2a10" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M-160 6 C -96 -88 72 -96 160 6 C 72 108 -96 100 -160 6 Z" fill="url(#gold)" stroke="#3a2a10" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M-20 -70 C 10 -118 70 -112 92 -66" fill="#c99a3e" stroke="#3a2a10" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M-70 -40 C -30 -58 30 -60 70 -44" fill="none" stroke="#fff6dc" stroke-opacity=".7" stroke-width="8" stroke-linecap="round"/>
+    <path d="M40 -40 C 60 0 60 30 40 60" fill="none" stroke="#3a2a10" stroke-opacity=".55" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="100" cy="-12" r="15" fill="#1d1408"/><circle cx="104" cy="-17" r="5" fill="#fff"/>
+  </g>
+  <!-- sıçrayan damlalar -->
+  <g fill="#cfe6dc"><circle cx="262" cy="664" r="10"/><circle cx="226" cy="628" r="7"/><circle cx="300" cy="616" r="6"/><circle cx="196" cy="672" r="5"/></g>
+  <path d="M200 700 Q 250 670 310 694" fill="none" stroke="#cfe6dc" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+
+  <!-- altın madalyon halkası -->
+  <circle cx="512" cy="512" r="384" fill="none" stroke="#0b0a0a" stroke-width="30"/>
+  <circle cx="512" cy="512" r="384" fill="none" stroke="url(#gold)" stroke-width="18"/>
+  <circle cx="512" cy="512" r="356" fill="none" stroke="#e7c26a" stroke-opacity=".45" stroke-width="4"/>
+  <circle cx="512" cy="512" r="412" fill="none" stroke="#e7c26a" stroke-opacity=".22" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round"/>
+  <g fill="url(#gold)" stroke="#0b0a0a" stroke-width="5">
+    <path d="M512 104 L 538 128 L 512 152 L 486 128 Z"/>
+    <path d="M512 872 L 538 896 L 512 920 L 486 896 Z"/>
+    <path d="M104 512 L 128 486 L 152 512 L 128 538 Z"/>
+    <path d="M872 512 L 896 486 L 920 512 L 896 538 Z"/>
+  </g>
+</svg>

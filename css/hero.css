@@ -1,0 +1,57 @@
+/* Kahraman (js/hero.js) — harita avatarı ve envanter bebeği */
+
+/* Harita: viewBox -20 -46 40 52 → 1 birim = 1px; ayak noktası (0,0) .wv-me konumuna oturur */
+svg.wv-hero.hero-map { left: -20px; top: -46px; width: 40px; height: 52px; overflow: visible; }
+.wv-me .hero-map ~ .wv-tool { display: none; }              /* eşya artık elde çiziliyor */
+
+/* Ön kol omuzdan döner (viewBox birimi), pelerin boyundan */
+.wv-hero .wv-arm { transform-box: view-box; transform-origin: .6px -23.4px; }
+.wv-hero .wv-cape { transform-box: view-box; transform-origin: -1px -25.4px; }
+
+.wv-me.walk .wv-arm { animation: heroArmWalk .3s ease-in-out infinite alternate; }
+.wv-me.walk .wv-cape { animation: heroCapeWalk .3s ease-in-out infinite alternate; }
+.wv-me.work .wv-arm { animation: heroSwing .6s cubic-bezier(.5, 0, .3, 1) infinite; }
+.wv-me.work .hold-olta .wv-arm { animation: heroCast 2.8s ease-in-out infinite; }
+.wv-me.work .wv-cape { animation: heroCapeWork .6s ease-in-out infinite; }
+
+/* Vuruş: kaldır (arkaya) → hızla öne indir → kısa tutuş → geri */
+@keyframes heroSwing {
+  0%, 100% { transform: rotate(-145deg); }
+  36% { transform: rotate(-158deg); }
+  58% { transform: rotate(12deg); }
+  70% { transform: rotate(6deg); }
+}
+/* Olta: geri al, ileri savur, sonra sakin bekle */
+@keyframes heroCast {
+  0% { transform: rotate(0deg); }
+  14% { transform: rotate(-48deg); }
+  26% { transform: rotate(22deg); }
+  34%, 100% { transform: rotate(8deg); }
+  60% { transform: rotate(11deg); }
+  80% { transform: rotate(6deg); }
+}
+@keyframes heroArmWalk { from { transform: rotate(-16deg); } to { transform: rotate(12deg); } }
+@keyframes heroCapeWalk { from { transform: rotate(1deg); } to { transform: rotate(7deg); } }
+@keyframes heroCapeWork { 0%, 100% { transform: rotate(0deg); } 58% { transform: rotate(4deg); } }
+
+/* Kadim rünler: yumuşak nabız */
+.wv-hero .hr-rune, .hero-svg .hr-rune { animation: heroRune 2.4s ease-in-out infinite; }
+@keyframes heroRune { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
+
+/* Bebek: pelerin hafif dalgalanır, turuncu kalite pırıldar */
+.hero-svg .hr-cape { transform-box: view-box; transform-origin: 50px 31px; animation: heroCape 6s ease-in-out infinite; }
+@keyframes heroCape { 0%, 100% { transform: skewX(0deg); } 50% { transform: skewX(-1.6deg); } }
+.hero-svg .hr-spark, .wv-hero .hr-spark { transform-box: fill-box; transform-origin: center; animation: heroSpark 2.6s ease-in-out infinite; }
+.hr-q3 g:nth-child(2) .hr-spark { animation-delay: .7s; }
+.hr-q3 g:nth-child(3) .hr-spark { animation-delay: 1.4s; }
+.hr-q3 g:nth-child(4) .hr-spark { animation-delay: 2s; }
+@keyframes heroSpark {
+  0%, 100% { opacity: 0; transform: scale(.3) rotate(0deg); }
+  35% { opacity: 1; transform: scale(1) rotate(45deg); }
+  65% { opacity: 0; transform: scale(.4) rotate(90deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hr-rune, .hr-cape, .wv-arm, .wv-cape { animation: none !important; }
+  .hr-spark { animation: none !important; opacity: .9; }
+}

@@ -1,0 +1,467 @@
+/* Eşya kartı: bir eşyaya dokununca açılan bilgi kartı (kullanıcının IDLE SKY "Eşya Kartı" tasarımı, itemCard.css).
+   Resim, eşya çerçevesinin nadirlik renkli kafes zemininde (itemFrame.css .ifr-bg/.ifr-pt/.ifr-fx); kademe sağ üstte
+   siyah köşe plakası; ad ve "NADİRLİK · TÜR · K-II" resmin soluşunun üstünde; büyük değer satırları; açıklama;
+   bilgi şeritleri; ağırlık ve fiyat; en altta eylemler. Kademe hiçbir zaman nadirlik rengini almaz; nadirlik = --rc. */
+
+.itc {
+  --rc: #e8e4dc;
+  --cb: color-mix(in srgb, var(--rc) 8%, #151210);
+  position: relative;
+  width: 272px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cb);
+  /* thin rarity edge inside the game's dark outline, then the deep shadow */
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rc) 38%, transparent), 0 0 0 2px #0b0a0a, 0 16px 34px rgba(0, 0, 0, 0.62);
+  color: #c9c0b8;
+  font: 12px/1.4 Kurale, Georgia, serif;
+  text-align: left;
+}
+
+.itc-white {
+  --cb: #171412;
+}
+
+/* ---------------------------------------------------------------- picture */
+.itc > .itc-pic {
+  height: 176px;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.itc-pic > .ifr-bg {
+  box-shadow: none;
+  background: radial-gradient(70% 80% at 50% 38%, color-mix(in srgb, var(--rc) 26%, #1d1916), #0e0c0b 95%);
+}
+
+.itc-white > .itc-pic > .ifr-bg {
+  background: radial-gradient(70% 80% at 50% 38%, #2c2723, #0e0c0b 95%);
+}
+
+.itc-pic > .ifr-pt {
+  background: radial-gradient(60% 70% at 50% 40%, color-mix(in srgb, var(--rc) 30%, transparent) 10%, transparent 100%);
+}
+
+.itc-art {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  top: 6px;
+  display: grid;
+  place-items: center;
+  height: 150px;
+  pointer-events: none;
+}
+
+.itc-img {
+  display: block;
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.6));
+}
+
+.itc-locked .itc-img {
+  filter: grayscale(0.7) brightness(0.75) drop-shadow(0 3px 4px rgba(0, 0, 0, 0.6));
+}
+
+/* an item without its designed picture: the finished slot alone */
+.itc-ph {
+  width: 84px;
+  height: 84px;
+  margin-top: -14px;
+  opacity: 0.85;
+}
+
+/* the tier: the frame's black corner plate, top right (itemFrame.css .ifr-tm, one size up) */
+.itc-tm {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 34px;
+  box-sizing: border-box;
+  padding: 0 0 3px 5px;
+  border-radius: 0 12px 0 16px;
+  background: linear-gradient(225deg, #2c2825, #0e0c0b 80%);
+  box-shadow: inset 1px -1px 0 rgba(214, 208, 198, 0.35), -1px 1px 3px rgba(0, 0, 0, 0.55);
+  font: 900 15px/1 Cinzel, serif;
+  letter-spacing: -0.02em;
+}
+
+.itc-tm > i {
+  font-style: normal;
+  background: linear-gradient(180deg, #fffaf0 15%, #cfc8bc 55%, #8f887e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.9));
+}
+
+
+/* the boost ribbon hanging beside the tier plate */
+.itc-rib {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+  padding: 7px 0 15px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--rc) 78%, #fff6e2), var(--rc) 45%, color-mix(in srgb, var(--rc) 70%, #120c08));
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  color: #1c1a19;
+  line-height: 1;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55));
+}
+
+.itc-rib small {
+  font: 700 8.5px Cinzel, serif;
+  letter-spacing: 0.06em;
+}
+
+.itc-rib b {
+  margin-top: 2px;
+  font: 700 13px Inter, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.itc-white .itc-rib {
+  color: #1c1a19;
+}
+
+/* ---------------------------------------------------------------- name, eyebrow, stats over the fade */
+.itc-head {
+  position: relative;
+  z-index: 6;
+  margin-top: -58px;
+  padding: 26px 14px 8px;
+  background: linear-gradient(180deg, transparent, var(--cb) 46%);
+}
+
+.itc-name {
+  display: block;
+  font: 400 22px/1.12 Kurale, Georgia, serif;
+  color: #fbf4e6;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75), 0 0 2px #000;
+}
+
+.itc-name small {
+  font-size: 13px;
+  color: #b8afa9;
+}
+
+.itc-eye {
+  display: block;
+  margin-top: 3px;
+  font: 700 10.5px/1.3 Cinzel, serif;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--rc);
+}
+
+/* the tier part of the eyebrow is silver, like the plate (tier never takes the rarity colour) */
+.itc-eye em {
+  font-style: normal;
+  color: #cfc8bc;
+}
+
+.itc-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 7px;
+}
+
+.itc-st {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font: 400 19px/1.2 Kurale, Georgia, serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.itc-st > span {
+  min-width: 32px;
+  font: 700 11px Cinzel, serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9a9088;
+}
+
+.itc-st > s {
+  color: #6f6760;
+  text-decoration-thickness: 1.5px;
+}
+
+.itc-st > b {
+  font-weight: 400;
+  color: #f2ead8;
+}
+
+.itc-st > b.up {
+  color: var(--rc);
+}
+
+.itc-white .itc-st > b.up {
+  color: #f2ead8;
+}
+
+/* ---------------------------------------------------------------- body */
+.itc-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 14px 10px;
+}
+
+.itc-body:empty {
+  display: none;
+}
+
+.itc-where {
+  font-size: 11px;
+  color: #8a807b;
+}
+
+.itc-desc {
+  margin: 0;
+  font-size: 11.5px;
+  font-style: italic;
+  line-height: 1.38;
+  color: #a0968f;
+}
+
+.itc-note {
+  font-size: 11.5px;
+  color: #a89e94;
+}
+
+.itc-note b {
+  font-weight: 400;
+  color: #f2ead8;
+}
+
+.itc-note .coin {
+  width: 11px;
+  height: 11px;
+  vertical-align: -1px;
+}
+
+/* the roll: bar, %, range, power */
+.itc-roll {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 7px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+  color: #a89e94;
+}
+
+.itc-bar {
+  position: relative;
+  flex: 1 1 60px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.itc-bar > u {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 3px;
+  background: var(--rq, #e0a040);
+  box-shadow: 0 0 6px var(--rq, #e0a040);
+}
+
+.itc-roll > em {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--rq, #e0a040);
+  font-variant-numeric: tabular-nums;
+}
+
+.itc-rng {
+  color: #8a807b;
+  font-variant-numeric: tabular-nums;
+}
+
+.itc-roll > small {
+  flex-basis: 100%;
+  font-size: 11px;
+}
+
+.itc-roll > small b {
+  font-weight: 400;
+  color: #f2ead8;
+}
+
+/* perks: a dark stripe each, marked in the perk's own rarity colour */
+.itc-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itc-perk {
+  --pc: #e8e4dc;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 2px 0 0 var(--pc);
+  font-size: 12.5px;
+  line-height: 1.25;
+  color: #e9e1d4;
+}
+
+.itc-perk > b {
+  flex: none;
+  font-weight: 400;
+  color: var(--pc);
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* ---------------------------------------------------------------- footer */
+.itc-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 8px;
+  border-top: 1px solid color-mix(in srgb, var(--rc) 35%, transparent);
+  font-size: 12px;
+  color: #8a807b;
+  font-variant-numeric: tabular-nums;
+}
+
+.itc-pr {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 2px 10px;
+}
+
+.itc-pr b {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 400;
+  color: #f3d68e;
+}
+
+.itc-pr b em {
+  font-style: normal;
+  color: #8a807b;
+}
+
+.itc-pr .coin {
+  width: 11px;
+  height: 11px;
+}
+
+.itc-hint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  padding: 5px 14px 7px;
+  background: rgba(0, 0, 0, 0.22);
+  font-size: 10.5px;
+  color: #7d746e;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .itc-pic > .ifr-fx > i {
+    animation: none;
+  }
+}
+
+.itc-nw {
+  white-space: nowrap;
+}
+
+
+/* oyunda: kart ekranın ortasında, hafif karartılmış zeminin üstünde açılır; kısa ekranda sığacak kadar küçülür */
+.itc-layer { position: fixed; inset: 0; z-index: 380; display: grid; place-items: center; padding: 14px; background: rgba(8, 7, 6, .5);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); animation: itcFade .2s ease both; }
+.itc-layer.out { animation: itcFade .18s ease reverse both; }
+.itc-layer > .itc { transform-origin: center; scale: var(--s, 1); animation: itcPop .32s var(--spring, cubic-bezier(.34, 1.56, .64, 1)) both; }
+.itc-layer.out > .itc { animation: itcOut .18s ease both; }
+@keyframes itcFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes itcPop { from { opacity: 0; transform: translateY(10px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes itcOut { to { opacity: 0; transform: scale(.96); } }
+.itc { width: min(272px, calc(100vw - 28px)); }
+.itc-img.itc-ic { width: 96px; height: 96px; display: grid; place-items: center; font-size: 56px; color: #e8dcc6; }
+.itc-acts { display: flex; gap: 6px; padding: 8px 10px 10px; background: rgba(0, 0, 0, .22); }
+.itc-acts:empty { display: none; }
+.itc-acts button { flex: 1; min-width: 0; height: 34px; padding: 0 8px; border-radius: 10px; font: 400 13px/1 Kurale, Georgia, serif; color: #e9e1d4;
+  background: #1d1a18; box-shadow: 0 0 0 1px #0b0a0a, inset 0 0 0 1px #3a332b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: transform .15s; }
+.itc-acts button.pri { color: #1a1410; background: linear-gradient(180deg, #f0d07c, #d6af57); box-shadow: 0 0 0 1px #0b0a0a, inset 0 1px 0 rgba(255, 248, 225, .55); }
+.itc-acts button:active { transform: scale(.96); }
+.itc-x { position: absolute; z-index: 7; top: 7px; left: 7px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; color: #e6dfd7;
+  background: rgba(14, 12, 11, .7); box-shadow: 0 0 0 1px rgba(255, 255, 255, .08); }
+/* nadirlik kenarı resmin ve başlığın da üstünden dolaşsın */
+.itc::after { content: ''; position: absolute; inset: 0; z-index: 8; border-radius: inherit; pointer-events: none; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rc) 38%, transparent); }
+.itc-acts button { display: grid; place-items: center; text-align: center; }
+.itc-pr .coin { display: inline-block; margin-left: 2px; }
+
+/* küçük kart: dokunulan yerin yanında açılır, arka plan kararmaz ve ekran kaplanmaz */
+.itc-layer { display: block; padding: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; pointer-events: none; animation: none; }
+.itc-layer.out { animation: none; }
+.itc-layer > .itc { position: fixed; pointer-events: auto; width: 214px; font-size: 11px; }
+.itc-layer > .itc > .itc-pic { height: 112px; }
+.itc-layer .itc-art { top: 4px; height: 100px; }
+.itc-layer .itc-img { width: 96px; height: 96px; }
+.itc-layer .itc-img.itc-ic { width: 70px; height: 70px; font-size: 40px; }
+.itc-layer .itc-tm { width: 30px; height: 27px; font-size: 12px; border-radius: 0 12px 0 13px; padding: 0 0 2px 4px; }
+.itc-layer .itc-x { width: 24px; height: 24px; top: 6px; left: 6px; font-size: 9px; }
+.itc-layer .itc-head { margin-top: -40px; padding: 18px 11px 5px; }
+.itc-layer .itc-name { font-size: 16.5px; }
+.itc-layer .itc-name small { font-size: 11px; }
+.itc-layer .itc-eye { font-size: 8.5px; letter-spacing: .1em; }
+.itc-layer .itc-stats { margin-top: 4px; }
+.itc-layer .itc-st { font-size: 14.5px; gap: 6px; }
+.itc-layer .itc-st > span { min-width: 26px; font-size: 9px; }
+.itc-layer .itc-body { padding: 0 11px 7px; gap: 4px; }
+.itc-layer .itc-desc { font-size: 10px; line-height: 1.32; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.itc-layer .itc-note { font-size: 10px; }
+.itc-layer .itc-perks { gap: 3px; }
+.itc-layer .itc-perk { padding: 3px 7px; font-size: 10.5px; }
+.itc-layer .itc-foot { padding: 5px 11px 6px; font-size: 10.5px; }
+.itc-layer .itc-pr .coin { width: 10px; height: 10px; }
+.itc-layer .itc-acts { gap: 5px; padding: 6px 8px 8px; }
+.itc-layer .itc-acts button { height: 28px; border-radius: 8px; font-size: 11.5px; padding: 0 5px; }
+.itc-layer > .itc { animation: itcPop .24s var(--spring, cubic-bezier(.34, 1.56, .64, 1)) both; }
+.itc-layer.out > .itc { animation: itcOut .16s ease both; }
+@keyframes itcPop { from { opacity: 0; transform: scale(.88); } to { opacity: 1; transform: none; } }
+
+/* özellikler: henüz işlemeyenler soluk ("yakında"); bilgi satırları nötr */
+.itc-perk.off { opacity: .55; }
+.itc-perk.off small { margin-left: 4px; font-size: 9px; font-style: italic; color: #8a807b; }
+.itc-perk.info { --pc: #5a5048; color: #c9c0b8; }
+.itc-perk.info > b { color: #d8cfc4; }
+
+/* ustalık halkası: resmin sol üstünde, hattın seviyesi ve XP ilerlemesi (alette mesleğin seviyesi) */
+.itc-mst { position: absolute; z-index: 7; top: 7px; left: 7px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; padding: 0;
+  background: conic-gradient(#e7c26a calc(var(--k) * 360deg), rgba(231, 194, 106, .16) 0); box-shadow: 0 0 0 1px #1c1a19, 0 2px 4px rgba(0, 0, 0, .55); }
+.itc-mst::before { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #2e2a27, #141210 75%); }
+.itc-mst b { position: relative; font: 700 11px var(--fn); color: #f3d68e; }
+.itc-mst.prof { background: conic-gradient(#8fe07f calc(var(--k) * 360deg), rgba(143, 224, 127, .16) 0); }
+.itc-mst.prof b { color: #c8f0bc; }
+.itc-layer .itc-mst { width: 26px; height: 26px; top: 6px; left: 6px; }
+.itc-layer .itc-mst b { font-size: 10px; }
+.itc-perk.info { flex-wrap: wrap; } .itc-perk.info > b { flex: 1 1 auto; text-align: right; white-space: normal; }
