@@ -1,0 +1,253 @@
+/* Ada bildirimleri, seçenek B "Envanter Kartı" (IDLE SKY tasarım paketi, ada-bildirimi-b).
+   ÜRETİLDİ: paketteki index.html'in CSS'inden; seçiciler .nb-slit altına alındı, çakışan sınıflar
+   (chip, mt, burst, hold, tw, emb, flash) n- önekiyle, canlandırmalar nb- önekiyle yeniden adlandırıldı. */
+:root {
+  --ink: #0b0a0a; --cream: #f2ead8; --bronze: #b8913e;
+  --spring-soft: cubic-bezier(0.25, 1.12, 0.4, 1); --ease-in: cubic-bezier(0.55, 0, 0.8, 0.3);
+  --lattice: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 0L14 7L7 14L0 7Z' fill='none' stroke='%23e7c26a' stroke-opacity='.05' stroke-width='.8'/%3E%3C/svg%3E");
+}
+.isl-plate {position: absolute; inset: 0; border-radius: 21px; z-index: -1;
+  background: linear-gradient(180deg, #1c1a19, #141312);
+  box-shadow: 0 0 0 1.5px #413826, inset 0 1px 0 rgba(255, 240, 210, 0.06), 0 8.5px 22.5px -7px rgba(0, 0, 0, 0.85);
+  will-change: transform;}
+.isl-rim {position: absolute; inset: 0; border-radius: inherit; opacity: 0; pointer-events: none;
+  box-shadow: 0 0 0 1.5px var(--pc, #e7c26a), 0 0 14px color-mix(in srgb, var(--pc, #e7c26a) 55%, transparent), inset 0 0 10px color-mix(in srgb, var(--pc, #e7c26a) 30%, transparent);}
+.isl-shn {position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none;}
+.isl-shn > i {position: absolute; top: 0; bottom: 0; left: 0; width: 40%; transform: translateX(-120%);
+  background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--pc, #e7c26a) 26%, transparent), transparent);}
+.nb-mouth {position: absolute; left: 50%; top: 44px; width: 220px; height: 26px; margin-left: -110px; z-index: 28; pointer-events: none; opacity: 0;
+  background: radial-gradient(50% 50% at 50% 30%, color-mix(in srgb, var(--pc, #e7c26a) 55%, transparent), transparent 100%);}
+.nb-slit {position: absolute; left: 0; right: 0; top: 33px; bottom: 0; overflow: hidden; z-index: 25; pointer-events: none;}
+.nb-slit .nt {position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: center; pointer-events: none;
+  transform: translate3d(0, var(--y, 0px), 0); transition: transform 0.56s var(--spring-soft); will-change: transform;}
+.nb-slit .nt.no-tr {transition: none;}
+.nb-slit .nt.up {transition: transform 0.42s var(--ease-in);}
+.nb-slit .nt.slow {transition-duration: 0.72s;}
+.nb-slit .qtxt {position: absolute; left: 0; right: 0; top: 0; text-align: center; pointer-events: none; opacity: 0;
+  font: 700 12px/1 var(--fs); letter-spacing: 0.06em; color: #f0d58c; transform: translate3d(0, var(--y, 0px), 0);
+  text-shadow: 0 0 2px #0b0a0a, 0 0 2px #0b0a0a, 0 1px 2px #0b0a0a, 0 0 6px rgba(0, 0, 0, 0.7);
+  transition: opacity 0.25s, transform 0.5s var(--spring-soft);}
+.nb-slit .qtxt.on {opacity: 1;}
+.nb-slit .nc {--rc: #e8e4dc; --rl: #fffaf0; --lab: #c9c1b5;
+  position: relative; width: min(304px, calc(100% - 24px)); height: 58px; pointer-events: auto; cursor: pointer; touch-action: none;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 240, 210, 0.04), transparent 40%),
+    radial-gradient(90% 140% at 0% 50%, color-mix(in srgb, var(--rc) 15%, transparent), transparent 55%),
+    var(--lattice),
+    linear-gradient(180deg, #231f1d, #181615);
+  box-shadow: 0 0 0 1.5px var(--ink), inset 0 1px 0 rgba(255, 240, 210, 0.05), 0 12px 24px -10px rgba(0, 0, 0, 0.8), 0 3px 8px -3px rgba(0, 0, 0, 0.5);
+  transition: height 0.44s var(--spring-soft), box-shadow 0.25s;}
+.nb-slit .nc::before {content: ''; position: absolute; inset: 3px; border-radius: 11px; pointer-events: none; z-index: 3;
+  box-shadow: inset 0 0 0 1px rgba(231, 194, 106, 0.15); transition: box-shadow 0.25s;}
+.nb-slit .nc::after {content: ''; position: absolute; left: 50%; top: -4px; width: 8px; height: 8px; margin-left: -4px; transform: rotate(45deg); z-index: 4;
+  background: linear-gradient(135deg, var(--rl), var(--rc) 60%, color-mix(in srgb, var(--rc) 40%, #120c08));
+  box-shadow: 0 0 0 1.2px var(--ink), 0 0 7px color-mix(in srgb, var(--rc) 55%, transparent);
+  transition: opacity 0.2s, transform 0.3s var(--spring);}
+.nb-slit .nc.mini::after {opacity: 0; transform: rotate(45deg) scale(0.3);}
+.nb-slit .nc.nhold {box-shadow: 0 0 0 1.5px var(--ink), inset 0 1px 0 rgba(255, 240, 210, 0.05), 0 14px 26px -10px rgba(0, 0, 0, 0.85), 0 0 0 3px color-mix(in srgb, var(--rc) 22%, transparent);}
+.nb-slit .nc.nhold::before {box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rc) 45%, rgba(231, 194, 106, 0.3));}
+.nb-slit .r-white {--rc: #e8e4dc; --rl: #fffaf0; --lab: #cfc8bc;}
+.nb-slit .r-green {--rc: #6fcf62; --rl: #b6f0a8; --lab: #8fe07f;}
+.nb-slit .r-blue {--rc: #4ea4f0; --rl: #a8d4ff; --lab: #82c0f7;}
+.nb-slit .r-orange {--rc: #d06c14; --rl: #ff9f45; --lab: #ff9a3e; --rd: #4a1d04;}
+.nb-slit .r-red {--rc: #e8474c; --rl: #ff7468; --lab: #ff6b62; --rd: #4e0c10;}
+.nb-slit .r-gold {--rc: #e7c26a; --rl: #ffe6a0; --lab: #f0cd77; --rd: #3a2a0c;}
+.nb-slit .t-info {--rc: #6fcbef; --rl: #cdeffc; --lab: #8ed6f3;}
+.nb-slit .t-warn {--rc: #f0a53a; --rl: #ffe0a8; --lab: #f5b75a;}
+.nb-slit .t-bad {--rc: #e8474c; --rl: #ffb9b0; --lab: #ff7b78;}
+.nb-slit .clip {position: absolute; inset: 0; border-radius: inherit; overflow: hidden;}
+.nb-slit .ff, .nb-slit .fm {position: absolute; left: 0; right: 0; top: 0; transition: opacity 0.22s, transform 0.32s var(--ease);}
+.nb-slit .ff {height: 58px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; column-gap: 10px; padding: 0 13px 0 7px;}
+.nb-slit .fm {height: 36px; display: flex; align-items: center; gap: 9px; padding: 0 13px 0 6px; opacity: 0; transform: translateY(6px); pointer-events: none;}
+.nb-slit .nc.mini .ff {opacity: 0; transform: translateY(-8px); pointer-events: none;}
+.nb-slit .nc.mini .fm {opacity: 1; transform: none; transition-delay: 0.06s;}
+.nb-slit .nc.find .ff {height: 62px;}
+.nb-slit .nc.toast .ff {height: 48px; grid-template-columns: auto minmax(0, 1fr); padding: 0 14px 0 9px;}
+.nb-slit .cell {position: relative; width: 44px; height: 44px; border-radius: 11px; display: grid; place-items: center; z-index: 1;
+  background: radial-gradient(80% 60% at 50% 0%, rgba(231, 194, 106, 0.05), transparent 70%), #121010;
+  box-shadow: 0 0 0 1.5px var(--ink), inset 0 2px 8px rgba(0, 0, 0, 0.55);}
+.nb-slit .cell > .ifr {width: 40px; height: 40px; position: relative; z-index: 1;}
+.nb-slit .r-white .cell {background: radial-gradient(90% 80% at 50% 30%, #2e2925, #141211 80%);}
+.nb-slit .r-white .cell .ifr-ico {filter: drop-shadow(0 1.5px 1.5px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 4px rgba(255, 244, 220, 0.22)) brightness(1.12);}
+.nb-slit .nc .ifr > .ifr-tm {width: 19px; height: 16px; padding: 0 0 1px 2px; border-radius: 0 7px 0 8px; font: 700 11px/1 var(--fs); letter-spacing: -0.04em;}
+.nb-slit .nc .cell.big .ifr > .ifr-tm {width: 27px; height: 22px; border-radius: 0 10px 0 11px; font-size: 14.5px;}
+.nb-slit .fm .ifr {width: 26px; height: 26px; flex: none; border-radius: 6px;}
+.nb-slit .fm .ifr > .ifr-tm {display: none;}
+.nb-slit .tx {min-width: 0; display: flex; flex-direction: column;}
+.nb-slit .lab {font: 700 11px/1.1 var(--fs); letter-spacing: 0.08em; color: var(--lab); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.nb-slit .ttl {font: 700 15px/1.18 var(--fb); color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.nb-slit .sub {font: 400 11.5px/1.18 var(--fb); color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.nb-slit .sub b {font: 600 11px/1 var(--fn); color: #d3cabf;}
+.nb-slit .val {display: flex; flex-direction: column; align-items: flex-end; gap: 4px; font: 700 17px/1 var(--fn); color: var(--cream); font-variant-numeric: tabular-nums;}
+.nb-slit .val .chev {width: 18px; height: 18px; stroke: #8f857e; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round;}
+.nb-slit .rep {font: 700 11px/1 var(--fn); padding: 3px 6px; border-radius: 8px; color: #1c1a19; font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #f3d68e, #c79a45); box-shadow: 0 0 0 1px var(--ink);}
+.nb-slit .rep[hidden] {display: none;}
+.nb-slit .fm .nmt {flex: 1; min-width: 0; font: 600 13.5px/1 var(--fb); color: #e6dfd7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.nb-slit .fm .nmt i {font-style: normal; color: var(--lab);}
+.nb-slit .fm .mv {display: flex; align-items: center; gap: 6px; font: 700 13px/1 var(--fn); color: var(--cream); font-variant-numeric: tabular-nums;}
+.nb-slit .fm .mv .rep {font-size: 11px; padding: 2px 5px;}
+.nb-slit .bump {animation: nb-bump 0.46s var(--spring);}
+@keyframes nb-bump {0% { transform: scale(1); } 35% { transform: scale(1.22); } 100% { transform: scale(1); }}
+.nb-slit .nc.in {animation: nb-cIn 0.56s var(--spring-soft) both;}
+.nb-slit .nc.in .ff .cell {animation: nb-cellIn 0.6s var(--spring) both 0.14s;}
+@keyframes nb-cIn {0% { opacity: 0; transform: scaleX(0.9); } 18% { opacity: 1; } 100% { opacity: 1; transform: none; }}
+@keyframes nb-cellIn {0% { transform: scale(0.82); } 100% { transform: none; }}
+.nb-slit .nc.out-side {animation: nb-cOutSide 0.3s var(--ease-in) forwards; pointer-events: none;}
+.nb-slit .nc.out-fade {animation: nb-cOutFade 0.24s var(--ease-in) forwards; pointer-events: none;}
+@keyframes nb-cOutSide {0% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateX(40px) scale(0.97); }}
+@keyframes nb-cOutFade {0% { opacity: 1; transform: none; } 100% { opacity: 0; transform: scale(0.96); }}
+.nb-slit .r-green.in .ff .cell {animation: nb-cellIn 0.6s var(--spring) both 0.14s, nb-cellGlow 1.4s var(--ease) 0.3s;}
+@keyframes nb-cellGlow {0% { box-shadow: 0 0 0 1.5px var(--ink), inset 0 2px 8px rgba(0, 0, 0, 0.55), 0 0 0 0 transparent; } 40% { box-shadow: 0 0 0 1.5px var(--ink), inset 0 2px 8px rgba(0, 0, 0, 0.55), 0 0 14px 2px color-mix(in srgb, var(--rc) 55%, transparent); } 100% { box-shadow: 0 0 0 1.5px var(--ink), inset 0 2px 8px rgba(0, 0, 0, 0.55), 0 0 0 0 transparent; }}
+.nb-slit .sweep {position: absolute; inset: 0; pointer-events: none; z-index: 2;}
+.nb-slit .sweep::before {content: ''; position: absolute; top: -20%; bottom: -20%; left: 0; width: 36%; transform: translateX(-120%) skewX(-18deg); background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--rl) 20%, transparent), transparent);}
+.nb-slit .nc.in .sweep::before {animation: nb-sweep 1.1s var(--ease) 0.4s;}
+@keyframes nb-sweep {from { transform: translateX(-120%) skewX(-18deg); } to { transform: translateX(330%) skewX(-18deg); }}
+.nb-slit .ntw {position: absolute; width: 9px; height: 9px; pointer-events: none; z-index: 8; background: #f4fbff; opacity: 0;
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%); filter: drop-shadow(0 0 3px var(--rl));}
+.nb-slit .nc.in .ntw {animation: nb-tw 1.3s var(--ease) both;}
+.nb-slit .ntw.a {left: -3px; top: -2px; animation-delay: 0.5s !important;}
+.nb-slit .ntw.b {right: -4px; top: 13px; width: 7px; height: 7px; animation-delay: 0.75s !important;}
+.nb-slit .ntw.c {left: 15px; bottom: -4px; width: 6px; height: 6px; animation-delay: 1s !important;}
+@keyframes nb-tw {0% { opacity: 0; transform: scale(0.2) rotate(0deg); } 35% { opacity: 1; transform: scale(1.15) rotate(45deg); } 100% { opacity: 0; transform: scale(0.3) rotate(110deg); }}
+.nb-slit .nc.find {height: 62px;}
+.nb-slit .nc.find::before {box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rc) 40%, transparent), inset 0 0 0 3px transparent, inset 0 0 0 4px color-mix(in srgb, var(--rc) 14%, transparent);}
+.nb-slit .nc.find .lab::before {content: '✦ '; color: var(--rl);}
+.nb-slit .nburst {position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; pointer-events: none; z-index: -1; opacity: 0;
+  background: repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--rl) 70%, transparent) 0 5deg, transparent 5deg 22.5deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 38%, #000 48%, transparent 100%); mask: radial-gradient(closest-side, transparent 38%, #000 48%, transparent 100%);}
+.nb-slit .nc.in .nburst {animation: nb-burstIn 0.9s var(--ease) both 0.2s, nb-spin 12s linear infinite;}
+@keyframes nb-burstIn {0% { opacity: 0; transform: scale(0.4); } 100% { opacity: 0.9; transform: scale(1); }}
+@keyframes nb-spin {to { rotate: 360deg; }}
+.nb-slit .nc.toast {height: 48px;}
+.nb-slit .seal {width: 30px; height: 30px; flex: none;}
+.nb-slit .seal svg {width: 100%; height: 100%; overflow: visible;}
+.nb-slit .seal .sh {fill: var(--rc); stroke: var(--ink); stroke-width: 1.6;}
+.nb-slit .seal .gl {stroke: #17110c; stroke-width: 2.6; fill: none; stroke-linecap: round;}
+.nb-slit .seal .gd {fill: #17110c;}
+.nb-slit .nc.toast .msg {font: 500 13.5px/1.2 var(--fb); color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.nb-slit .nc.toast .msg b {font: 700 12.5px/1 var(--fn); color: #fff;}
+.nb-slit .fm .seal {width: 20px; height: 20px;}
+.nb-slit .nc.toast.in .ff .seal {animation: nb-sealIn 0.6s var(--spring) both 0.12s;}
+@keyframes nb-sealIn {0% { transform: scale(0.5) rotate(-20deg); } 100% { transform: none; }}
+.nb-slit .nc.t-bad.in {animation: nb-cIn 0.56s var(--spring-soft) both, nb-shake 0.42s var(--ease) 0.5s;}
+@keyframes nb-shake {0%, 100% { translate: 0; } 20% { translate: -5px; } 45% { translate: 4px; } 70% { translate: -2px; }}
+.nb-slit .nc.grand {--cy: 82px; --gh: 96px;
+  width: min(316px, calc(100% - 22px)); height: auto; display: flex; flex-direction: column; align-items: center;
+  padding: 12px 14px 11px; border-radius: 17px;
+  background:
+    radial-gradient(70% 46% at 50% var(--cy), color-mix(in srgb, var(--rc) 20%, transparent), transparent 100%),
+    linear-gradient(180deg, rgba(255, 240, 210, 0.04), transparent 30%),
+    var(--lattice),
+    linear-gradient(180deg, #25201d, #161413);
+  box-shadow: 0 0 0 1.5px var(--ink), inset 0 0 0 1.5px color-mix(in srgb, var(--rc) 70%, #1c1a19), 0 22px 40px -14px rgba(0, 0, 0, 0.9);}
+.nb-slit .nc.grand::before {inset: 5px; border-radius: 12px; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rc) 22%, rgba(231, 194, 106, 0.22));}
+.nb-slit .nc.grand::after {width: 10px; height: 10px; margin-left: -5px; top: -5px;}
+.nb-slit .nc.grand.r-red {--cy: 92px; --gh: 112px; width: min(350px, calc(100% - 20px)); border-radius: 19px; padding-top: 14px;}
+.nb-slit .nc.grand.r-red::after {display: none;}
+.nb-slit .gglow {position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1; opacity: 0;
+  box-shadow: 0 0 26px 2px color-mix(in srgb, var(--rc) 55%, transparent);}
+.nb-slit .nc.grand.in .gglow {animation: nb-fadeTo 0.7s var(--ease) both var(--rv);}
+.nb-slit .nc.grand.r-red.in .gglow {box-shadow: 0 0 34px 4px color-mix(in srgb, var(--rc) 60%, transparent); animation: nb-fadeTo 0.7s var(--ease) both var(--rv), nb-breathe 2.4s ease-in-out infinite calc(var(--rv) + 0.7s);}
+@keyframes nb-fadeTo {from { opacity: 0; } to { opacity: 1; }}
+@keyframes nb-breathe {0%, 100% { opacity: 1; } 50% { opacity: 0.55; }}
+.nb-slit .gdeco {position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; z-index: 0;}
+.nb-slit .gdeco > * {position: absolute; left: 50%; top: var(--cy); pointer-events: none;}
+.nb-slit .halo {width: 170px; height: 150px; margin: -75px 0 0 -85px; border-radius: 50%; opacity: 0;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--rl) 45%, transparent), color-mix(in srgb, var(--rc) 22%, transparent) 55%, transparent);}
+.nb-slit .rays {width: 250px; height: 250px; margin: -125px 0 0 -125px; opacity: 0;
+  background: repeating-conic-gradient(from 0deg, transparent 0deg, color-mix(in srgb, var(--rl) 38%, transparent) 7deg, transparent 14deg, transparent 30deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 22%, #000 34%, transparent 92%); mask: radial-gradient(closest-side, transparent 22%, #000 34%, transparent 92%);}
+.nb-slit .nflash {width: 150px; height: 150px; margin: -75px 0 0 -75px; border-radius: 50%; opacity: 0;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--rl) 85%, #fff), color-mix(in srgb, var(--rl) 40%, transparent) 45%, transparent);}
+.nb-slit .shock {width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%; opacity: 0;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--rl) 80%, transparent), 0 0 14px 2px color-mix(in srgb, var(--rc) 60%, transparent), inset 0 0 12px color-mix(in srgb, var(--rc) 50%, transparent);}
+.nb-slit .nemb {width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; opacity: 0; background: var(--ec, var(--rl)); box-shadow: 0 0 6px 1px color-mix(in srgb, var(--rc) 80%, transparent);}
+.nb-slit .nc.grand.in .halo {animation: nb-haloIn 1.1s var(--ease) both var(--rv), nb-haloB 3.2s ease-in-out infinite calc(var(--rv) + 1.1s);}
+.nb-slit .nc.grand.in .rays {animation: nb-raysIn 1s var(--ease) both var(--rv), nb-spin 40s linear infinite;}
+.nb-slit .nc.grand.in .nflash {animation: nb-flash 0.65s var(--ease) var(--rv);}
+.nb-slit .nc.grand.in .shock {animation: nb-shock 0.95s var(--ease) var(--rv);}
+.nb-slit .nc.grand.in .nemb {animation: nb-emb var(--d, 2s) cubic-bezier(0.3, 0.6, 0.5, 1) infinite; animation-delay: calc(var(--rv) + var(--t, 0s));}
+@keyframes nb-haloIn {0% { opacity: 0; transform: scale(0.4); } 35% { opacity: 1; transform: scale(1.15); } 100% { opacity: 0.85; transform: none; }}
+@keyframes nb-haloB {0%, 100% { opacity: 0.85; } 50% { opacity: 0.6; }}
+@keyframes nb-raysIn {from { opacity: 0; scale: 0.6; } to { opacity: 0.75; scale: 1; }}
+@keyframes nb-flash {0% { opacity: 0; transform: scale(0.4); } 25% { opacity: 0.95; } 100% { opacity: 0; transform: scale(1.5); }}
+@keyframes nb-shock {0% { opacity: 0.95; transform: scale(0.45); } 100% { opacity: 0; transform: scale(2.7); }}
+@keyframes nb-emb {0% { opacity: 0; transform: translate(var(--x0, 0), 30px) scale(1.1); } 15% { opacity: 1; } 75% { opacity: 0.85; } 100% { opacity: 0; transform: translate(var(--x1, 0), -64px) scale(0.35); }}
+.nb-slit .orn {position: absolute; width: 24px; height: 24px; pointer-events: none; z-index: 3; opacity: 0;}
+.nb-slit .orn.tl {left: 6px; top: 6px;}
+.nb-slit .orn.tr {right: 6px; top: 6px; transform: scaleX(-1);}
+.nb-slit .orn.bl {left: 6px; bottom: 6px; transform: scaleY(-1);}
+.nb-slit .orn.br {right: 6px; bottom: 6px; transform: scale(-1, -1);}
+.nb-slit .nc.grand.in .orn {animation: nb-fadeTo 0.6s var(--ease) both calc(var(--rv) + 0.15s);}
+.nb-slit .crest {position: absolute; left: 50%; top: -13px; width: 64px; height: 26px; margin-left: -32px; z-index: 5; pointer-events: none;}
+.nb-slit .nc.grand.in .crest {animation: nb-crestIn 0.7s var(--spring) both calc(var(--rv) - 0.1s);}
+@keyframes nb-crestIn {0% { opacity: 0; transform: translateY(6px) scale(0.6); } 100% { opacity: 1; transform: none; }}
+.nb-slit .ghd {position: relative; z-index: 2; display: flex; align-items: center; gap: 9px; width: 100%; padding: 0 16px; height: 16px;}
+.nb-slit .ghd .rule {flex: 1; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--rc) 70%, transparent));}
+.nb-slit .ghd .rule.r {transform: scaleX(-1);}
+.nb-slit .ghd b {font: 700 13px/1 var(--fs); letter-spacing: 0.2em; color: var(--lab); text-shadow: 0 1px 1px #000, 0 0 10px color-mix(in srgb, var(--rc) 45%, transparent); white-space: nowrap;}
+.nb-slit .r-red .ghd {padding: 0 28px;}
+.nb-slit .r-red .ghd b {font-size: 14px; letter-spacing: 0.26em;}
+.nb-slit .gst {position: relative; z-index: 2; width: 100%; height: var(--gh); margin-top: 6px; display: grid; place-items: center;}
+.nb-slit .cell.big {width: 80px; height: 80px; border-radius: 16px;
+  box-shadow: 0 0 0 1.5px var(--ink), inset 0 2px 10px rgba(0, 0, 0, 0.6), 0 0 18px color-mix(in srgb, var(--rc) 45%, transparent);}
+.nb-slit .cell.big > .ifr {width: 70px; height: 70px;}
+.nb-slit .r-red .cell.big {width: 94px; height: 94px; border-radius: 18px;}
+.nb-slit .r-red .cell.big > .ifr {width: 82px; height: 82px;}
+.nb-slit .nc.grand.in .cell.big, .nb-slit .nc.grand.in .medal {animation: nb-reveal 0.7s var(--spring) both var(--rv);}
+@keyframes nb-reveal {0% { transform: scale(1); } 30% { transform: scale(1.13); } 100% { transform: none; }}
+.nb-slit .gtl {position: relative; z-index: 2; margin-top: 7px; max-width: 100%; font: 700 23px/1.12 var(--fb); letter-spacing: 0.005em; text-align: center;
+  background: linear-gradient(180deg, var(--t0) 0%, var(--t1) 48%, var(--t2) 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.95)) drop-shadow(0 0 1px rgba(0, 0, 0, 0.8)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.nb-slit .r-orange .gtl {--t0: #ffd29c; --t1: #ff9a3a; --t2: #e06a10;}
+.nb-slit .r-red .gtl {--t0: #ff9a86; --t1: #ff4f49; --t2: #d8262f; font-size: 28px;}
+.nb-slit .r-gold .gtl {--t0: #fff3c8; --t1: #f0cd77; --t2: #c39a42;}
+.nb-slit .nc.grand.in .gtl {animation: nb-tPop 0.6s var(--spring) both calc(var(--rv) + 0.08s);}
+@keyframes nb-tPop {0% { transform: scale(1); } 35% { transform: scale(1.05); } 100% { transform: none; }}
+.nb-slit .gsrc {position: relative; z-index: 2; margin-top: 1px; font: 400 12px/1.2 var(--fb); color: var(--muted);}
+.nb-slit .gfx {position: relative; z-index: 2; margin-top: 8px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;}
+.nb-slit .nchip {display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 8px; background: #121010;
+  box-shadow: 0 0 0 1.2px var(--ink), inset 0 0 0 1px rgba(231, 194, 106, 0.16); font: 600 11.5px/1 var(--fn); color: #e6dfd7; font-variant-numeric: tabular-nums; white-space: nowrap;}
+.nb-slit .nchip em {font-style: normal; font-weight: 700; color: var(--lab);}
+.nb-slit .nchip.pk {font: 600 12px/1 var(--fb); color: #e9dcc0; box-shadow: 0 0 0 1.2px var(--ink), inset 0 0 0 1px color-mix(in srgb, var(--rc) 35%, transparent);}
+.nb-slit .nchip.pk::before {content: ''; width: 5px; height: 5px; transform: rotate(45deg); background: var(--rl); box-shadow: 0 0 4px var(--rc);}
+.nb-slit .gac {position: relative; z-index: 2; width: 100%; margin-top: 10px; padding: 8px 2px 0; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  border-top: 1px solid rgba(231, 194, 106, 0.12);}
+.nb-slit .r-red .gac {padding: 8px 22px 0; margin-top: 11px;}
+.nb-slit .gac .ok {display: inline-flex; align-items: center; gap: 6px; font: 500 12.5px/1 var(--fb); color: #b5aba2; white-space: nowrap;}
+.nb-slit .gac .ok svg {width: 14px; height: 14px; stroke: #8fe07f; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round;}
+.nb-slit .gac .go {display: inline-flex; align-items: center; gap: 4px; padding: 7px 11px 7px 13px; border-radius: 9px; font: 700 13px/1 var(--fs); letter-spacing: 0.04em; color: var(--lab);
+  background: linear-gradient(180deg, #221d1a, #141211); box-shadow: 0 0 0 1.5px var(--ink), inset 0 0 0 1px color-mix(in srgb, var(--rc) 45%, transparent), inset 0 1px 0 rgba(255, 240, 210, 0.06); white-space: nowrap;}
+.nb-slit .gac .go svg {width: 13px; height: 13px; stroke: currentColor; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round;}
+.nb-slit .nc.grand.out-up {animation: nb-gOut 0.42s var(--ease-in) forwards; pointer-events: none;}
+@keyframes nb-gOut {0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; }}
+.nb-slit .medal {position: relative; width: 78px; height: 78px; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 30%, #4a3b2a, #17110d 74%); box-shadow: 0 0 0 1.5px var(--ink), 0 0 22px rgba(255, 208, 110, 0.4);}
+.nb-slit .medal img {width: 58px; height: 58px; filter: drop-shadow(0 2px 2px #000);}
+.nb-slit .medal svg {position: absolute; inset: -5px; width: calc(100% + 10px); height: calc(100% + 10px); transform: rotate(-90deg);}
+.nb-slit .medal svg circle {fill: none; stroke-width: 3.2;}
+.nb-slit .medal svg .bg {stroke: #2a2117;}
+.nb-slit .medal svg .fg {stroke: url(#medalGold); stroke-linecap: round; stroke-dasharray: 289; stroke-dashoffset: 289;}
+.nb-slit .nc.grand.in .medal svg .fg {animation: nb-ringFill 0.9s var(--ease) forwards calc(var(--rv) - 0.35s);}
+@keyframes nb-ringFill {from { stroke-dashoffset: 289; } to { stroke-dashoffset: 0; }}
+@media (prefers-reduced-motion: reduce) {
+  .nb-slit .nt {transition-duration: 0.2s !important;}
+  .nb-slit .nc.in, .nb-slit .nc.grand.in {animation: nb-fadeTo 0.25s ease both !important;}
+  .nb-slit .rays, .nb-slit .nemb, .nb-slit .shock, .nb-slit .nflash, .nb-slit .nburst {animation: none !important; opacity: 0 !important;}
+}
+
+/* Astralis yerleşimi: yarık ve ağız #app içinde (üstü JS'te adaya göre), levha .hud içinde adanın arkasında */
+.nb-slit { z-index: 74; }
+.nb-mouth { z-index: 74; }
+.hud > .nb-plate { position: absolute; inset: auto; z-index: -1; transform-origin: 50% 50%; }
+/* adanın yanlara uzayan levhası kapalı: kart gelip giderken adanın iki yanında renkli çizgi bırakıyordu */
+.hud > .nb-plate { display: none; }
+
+/* Ada, bildirim kartıyla aynı zemin: sıcak kömür degrade, ince elmas kafes, siyah dış hat ve içte altın kıl çizgi */
+.island {
+  background: linear-gradient(180deg, rgba(255, 240, 210, 0.04), transparent 40%), var(--lattice), linear-gradient(180deg, #231f1d, #181615);
+  box-shadow: 0 0 0 1.5px var(--ink), inset 0 0 0 1px rgba(231, 194, 106, 0.15), inset 0 1px 0 rgba(255, 240, 210, 0.05), 0 12px 24px -10px rgba(0, 0, 0, 0.8), 0 3px 8px -3px rgba(0, 0, 0, 0.5);
+}
+.island.det.gdet { box-shadow: 0 0 0 1.5px var(--ink), inset 0 0 0 1px color-mix(in srgb, var(--gc) 45%, rgba(231, 194, 106, 0.15)), 0 12px 28px -8px rgba(0, 0, 0, 0.9); }

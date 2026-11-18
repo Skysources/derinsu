@@ -1,0 +1,65 @@
+/* Derinsu — şehir ve ortak yerleşim: tam ekran şehir, harita düğmesi, etkiler, köşe düğmeleri, şehir teması.
+   (Şehir dışının eski kart ekranları 2026-11-18'de kaldırıldı; dünya haritası css/diyar.css) */
+body[data-view="world"] .buffs, body[data-view="world"] .bf-tip { display: none; }
+body[data-view="sea"] .buffs, body[data-view="sea"] .bf-tip { bottom: calc(var(--ar-b) + var(--cb-row) + 2px); }
+.sh-art { width: 92%; height: auto; max-height: 100%; overflow: visible; }
+.sh-art .fi { animation: shSwim 3.4s ease-in-out infinite; }
+@keyframes shSwim { 50% { transform: translate(2.5px, -1.2px); } }
+.sh-art .rp { transform-origin: 0 5px; animation: shRip 3s ease-out infinite; }
+@keyframes shRip { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.25); opacity: 0; } }
+.sh-art .sk { transform-box: fill-box; transform-origin: center; animation: shSpark 2.2s ease-in-out infinite; }
+@keyframes shSpark { 0%, 100% { opacity: 0; transform: scale(.4); } 50% { opacity: 1; transform: none; } }
+/* =========================================================
+   Yerleşim (kullanıcı isteği 2026-11-17): şehir bütün ekranı kaplar, ada üstünde yüzer; Sahaya Git sağ üstte;
+   etkiler altta ortada; köşe düğmeleri daha küçük (40 px) ve köşelerden daha içeride (14 px)
+   ========================================================= */
+#cityView.view { top: calc(-1 * var(--safe-t) - 2px); left: -12px; right: -12px; bottom: 0; padding: 0; }
+#cityView .lm { margin: 0; border-radius: 0; }
+.city-view .lm > .lm-top { left: 22px; top: calc(var(--safe-t) + 60px); }
+.city-view .lm > .lm-go { left: auto; right: 16px; top: calc(var(--safe-t) + 58px); bottom: auto; justify-content: flex-end; }
+.city-view .lm > .lm-go .cgo { --pt: 12px; min-width: 0; height: 40px; gap: 8px; padding: 0 calc(var(--pt) + 13px); }
+.city-view .lm > .lm-go .cgo-tx b { font-size: 11.5px; letter-spacing: .12em; }
+.city-view .lm > .lm-go .cgo-tx small { font-size: 7.6px; }
+/* etkiler: altta ortada, köşe düğmeleriyle aynı hizada yatay sıra */
+.buffs { left: 0; right: 0; width: max-content; margin: 0 auto; bottom: calc(var(--ar-b) + var(--cb-in) + (var(--cb) - 32px) / 2); flex-direction: row; }
+.bf-tip { left: 0; right: 0; width: max-content; margin: 0 auto; bottom: calc(var(--ar-b) + var(--cb-row) + 4px); transform: translateY(6px); text-align: center; }
+.bf-tip.on { transform: none; }
+/* saha ve denizde alt orta eylem çubuğunda: etkiler çubuğun hemen üstünde, ipucu onların üstünde */
+body[data-view="field"] .buffs, body[data-view="sea"] .buffs { bottom: calc(var(--ar-b) + var(--cb-row) + 2px); }
+body[data-view="field"] .bf-tip, body[data-view="sea"] .bf-tip { bottom: calc(var(--ar-b) + var(--cb-row) + 44px); }
+
+/* ---- harita düğmesi (şehirde sağ üst): yazısız, yuvarlak madalyon, katlanmış dünya haritası simgesi; çevresinde pusula halkası.
+   Sahadaysan ya da denizdeysen sağ altında mesleğin küçük altın rozeti durur. ---- */
+.city-view .lm > .lm-go.lm-map { right: 18px; top: calc(var(--safe-t) + 56px); }
+.mapb { position: relative; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; pointer-events: auto; cursor: pointer;
+  background: radial-gradient(circle at 50% 32%, #342c25, #141110 70%);
+  box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1.6px #c9a24e, inset 0 0 0 4px rgba(12, 10, 9, .65), inset 0 0 0 5px rgba(231, 194, 106, .22), 0 10px 18px -8px rgba(0, 0, 0, .75);
+  transition: transform .25s var(--spring); }
+.mapb::before { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 1px dashed rgba(240, 214, 150, .55); }
+.mapb::after { content: ''; position: absolute; inset: -9px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 2px, #f3d68e 1.6px, transparent 2.2px), radial-gradient(circle at 50% calc(100% - 2px), #f3d68e 1.6px, transparent 2.2px), radial-gradient(circle at 2px 50%, #f3d68e 1.6px, transparent 2.2px), radial-gradient(circle at calc(100% - 2px) 50%, #f3d68e 1.6px, transparent 2.2px); }
+.mapb > .ic { font-size: 25px; color: #f0d283; stroke-width: 1.6; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .6)); }
+.lm-map:active .mapb { transform: scale(.92); }
+.mapb-b { position: absolute; z-index: 1; right: -5px; bottom: -5px; width: 22px; height: 22px; border-radius: 50%; display: none; place-items: center; font-size: 11px; color: #24180a;
+  background: radial-gradient(circle at 40% 30%, #fff0bf, #e0b85c 60%, #b48838); box-shadow: 0 0 0 1.5px #0b0a0a, 0 2px 5px rgba(0, 0, 0, .5); }
+.mapb-b.on { display: grid; } .mapb-b .ic { stroke-width: 2.2; }
+/* köşe düğmeleri biraz daha aşağıda; etkiler en altta ortada */
+:root { --cb-bot: max(10px, calc(var(--ar-b) - 2px)); --cb-row: calc(var(--cb) + 24px); }
+.cbtn, .nav { bottom: var(--cb-bot); }
+.fv-bar { bottom: calc(var(--cb-bot) - 3px); }
+.buffs { bottom: max(6px, calc(var(--safe-b) * .35)); }
+
+/* ---- şehir teması (kullanıcı 2026-11-17: "çok aydınlık ve basit; daha karanlık; şehirde gece-gündüz olmasın"):
+   şehir hep akşamüstü renklerindedir (kit.js 'dusk'), lambalar ve pencereler yanar, fener döner, ateş ışır; kenarlar kararır ---- */
+#cityView .cw { background: #25617b; }
+#cityView .cf-smoke b { background: rgba(205, 196, 190, .6); }
+#cityView .cf-fire u { opacity: .85; }
+body #cityView .cf-beam { display: block; opacity: .7; }
+body #cityView .cf-cloud { display: block; opacity: .5; }
+body #cityView .cf-bfly { display: none; }
+body #cityView .cf-fly { display: block; }
+#cityView .lm::after { content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none; box-shadow: none; border-radius: 0;
+  background: radial-gradient(ellipse 95% 80% at 50% 52%, transparent 52%, rgba(12, 9, 16, .55)), linear-gradient(180deg, rgba(16, 11, 20, .5), transparent 20%, transparent 80%, rgba(16, 11, 20, .5)); }
+
+/* dünya haritası (sahalar ve deniz) da şehir gibi bütün ekranı kaplar */
+#worldView.view { top: calc(-1 * var(--safe-t) - 2px); left: -12px; right: -12px; bottom: 0; padding: 0; }

@@ -1,0 +1,11 @@
+{
+  "name": "Derinsu",
+  "short_name": "Derinsu",
+  "description": "Yarı idle balıkçılık oyunu",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#13110e",
+  "theme_color": "#13110e",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }, { "src": "assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }]
+}
