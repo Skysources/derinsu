@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Takımada Tasarımları</title>
+<style>
+  :root { --bg: #0f0d0c; --card: #1a1714; --line: #2e2822; --gold: #e7c26a; --gold2: #c9a24e; --text: #efe6d6; --muted: #a39887; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body { padding: env(safe-area-inset-top) 16px calc(env(safe-area-inset-bottom) + 24px); max-width: 560px; margin: 0 auto; }
+  header { padding: 18px 0 10px; text-align: center; }
+  header small { display: block; font: 700 11px/1 Georgia, serif; letter-spacing: .26em; text-transform: uppercase; color: var(--gold2); }
+  header h1 { margin: 6px 0 4px; font: 700 24px/1.1 Georgia, serif; color: #fbe9b8; letter-spacing: .04em; }
+  header p { margin: 0; font-size: 13px; color: var(--muted); }
+  .tabs { position: sticky; top: 0; z-index: 5; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; padding: 10px 0; background: linear-gradient(var(--bg) 80%, transparent); }
+  .tab { appearance: none; border: 0; border-radius: 12px; padding: 8px 4px 7px; background: var(--card); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; font: 600 11px/1.15 -apple-system, sans-serif; }
+  .tab b { display: block; font: 700 17px/1 Georgia, serif; color: var(--gold2); margin-bottom: 3px; }
+  .tab.on { background: linear-gradient(180deg, #33291e, #1c1712); color: #fbe9b8; box-shadow: inset 0 0 0 1.5px var(--gold); }
+  .tab.on b { color: var(--gold); }
+  .tab[disabled] { opacity: .45; cursor: default; }
+  .phone { position: relative; width: min(100%, 402px); margin: 6px auto 0; aspect-ratio: 402 / 874; border-radius: 34px; overflow: hidden; background: #000; box-shadow: 0 0 0 2px #2a2520, 0 0 0 7px #0a0908, 0 24px 50px -20px #000; cursor: pointer; }
+  .phone img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .45s ease, transform .55s cubic-bezier(.2, .8, .2, 1); }
+  .phone img.s2 { opacity: 0; transform: scale(1.06); }
+  .phone.open img.s1 { opacity: 0; transform: scale(.97); }
+  .phone.open img.s2 { opacity: 1; transform: none; }
+  .hint { position: absolute; left: 50%; bottom: 13%; transform: translateX(-50%); padding: 7px 14px; border-radius: 99px; background: rgba(15, 13, 12, .88); color: #fbe9b8; font: 600 12px/1 -apple-system, sans-serif; box-shadow: inset 0 0 0 1px var(--gold2); pointer-events: none; animation: nab 2.2s ease-in-out infinite; white-space: nowrap; }
+  .phone.open .hint { opacity: 0; animation: none; }
+  @keyframes nab { 50% { box-shadow: inset 0 0 0 1px var(--gold), 0 0 16px rgba(231, 194, 106, .55); } }
+  .wait { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; color: var(--muted); font-size: 14px; background: radial-gradient(circle, #1d1916, #0b0a09); }
+  .seg { display: flex; justify-content: center; gap: 8px; margin: 14px 0 4px; }
+  .seg button { appearance: none; border: 0; border-radius: 99px; padding: 8px 14px; background: var(--card); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); font: 600 13px/1 -apple-system, sans-serif; cursor: pointer; }
+  .seg button.on { color: #1a1410; background: linear-gradient(180deg, #f0d07c, #d6af57); box-shadow: none; }
+  article { margin-top: 16px; padding: 16px 16px 6px; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+  article h2 { margin: 0 0 10px; font: 700 19px/1.2 Georgia, serif; color: #fbe9b8; }
+  article ul { margin: 0; padding: 0; list-style: none; }
+  article li { margin: 0 0 10px; font-size: 13.5px; color: #d9cfbf; }
+  article li b { color: var(--gold); font-weight: 600; }
+  footer { margin-top: 18px; text-align: center; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header><small>Derinsu · dünya haritası · takımada</small><h1>Takımada Tasarımları</h1><p>Takımada fikrinin beş farklı yorumu. Ekrana dokun: sahaya dokunulduğundaki hâli açılır; yeniden dokun: haritaya dön.</p></header>
+<nav class="tabs" id="tabs"></nav>
+<div class="phone" id="phone"></div>
+<div class="seg" id="seg"><button data-s="1" class="on">Harita</button><button data-s="2">Sahaya dokununca</button></div>
+<article id="info"></article>
+<footer><a href="../" style="color:#c9a24e">← İlk beş tasarım</a> · beğendiğini söyle, oyuna o kurulur.</footer>
+<script src="veri.js"></script>
+<script>
+  const T = window.TASARIM, tabs = document.getElementById('tabs'), phone = document.getElementById('phone'), info = document.getElementById('info'), seg = document.getElementById('seg');
+  let cur = Math.max(0, T.findIndex(t => t.hazir)), open = false;
+  const md = s => s.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  function draw() {
+    tabs.innerHTML = T.map((t, i) => `<button class="tab ${i === cur ? 'on' : ''}" data-i="${i}" ${t.hazir ? '' : 'disabled'}><b>${i + 1}</b>${t.ad}</button>`).join('');
+    const t = T[cur]; open = false; phone.classList.remove('open');
+    phone.innerHTML = t.hazir ? `<img class="s1" src="img/${t.id}-1.jpg" alt="${t.ad}: harita"><img class="s2" src="img/${t.id}-2.jpg" alt="${t.ad}: sahaya dokununca"><span class="hint">Bir sahaya dokun</span>` : `<div class="wait">${t.ad}<br>çiziliyor…</div>`;
+    info.innerHTML = `<h2>${t.no}. ${t.ad}</h2><ul>${t.notlar.map(n => `<li>${md(n)}</li>`).join('')}</ul>`;
+    segSync();
+  }
+  function segSync() { seg.querySelectorAll('button').forEach(b => b.classList.toggle('on', (b.dataset.s === '2') === open)); }
+  tabs.addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b || b.disabled) return; cur = +b.dataset.i; draw(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  phone.addEventListener('click', () => { if (!T[cur].hazir) return; open = !open; phone.classList.toggle('open', open); segSync(); });
+  seg.addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (!b || !T[cur].hazir) return; open = b.dataset.s === '2'; phone.classList.toggle('open', open); segSync(); });
+  draw();
+</script>
+</body>
+</html>

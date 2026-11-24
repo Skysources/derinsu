@@ -1,0 +1,84 @@
+/* Derinsu — DİYAR: şehir dışındaki dünya haritası (kaydırılır, yakınlaşır). Sahalar sınırlı hücrelerdir; dokununca yakınlaşır,
+   düğümler (denizde sürüler) hücrenin içinde çıkar. Etiketler ve düğümler yakınlıktan bağımsız aynı boyda görünür (--iz). */
+.dy { position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: grab; background: #1f5a72; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+.dy.drag { cursor: grabbing; }
+.dy-world { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+.dy-c { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity .5s; } .dy.hazir .dy-c { opacity: 1; }
+.dy-sel { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+.dy-dim { fill: #0a0807; fill-opacity: .55; animation: dyDim .45s var(--ease) both; }
+@keyframes dyDim { from { fill-opacity: 0; } }
+.dy-out0 { fill: none; stroke: #0b0a0a; stroke-opacity: .7; stroke-width: 9; stroke-linejoin: round; }
+.dy-out { fill: none; stroke: #f3d68e; stroke-width: 3.6; stroke-linejoin: round; animation: dyOut 2.6s ease-in-out infinite; }
+@keyframes dyOut { 50% { stroke-opacity: .6; } }
+.dy-tags, .dy-nodes, .dy-flt { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+.dy-flt { z-index: 4; } .dy-flt .flt { position: absolute; transform: translate(-50%, 0) scale(var(--iz, 1)); transform-origin: 50% 100%; }
+
+/* bölge adı: büyük levha */
+.dy-reg { position: absolute; transform: translate(-50%, -50%) scale(calc(var(--iz, 1) * .86)); white-space: nowrap; padding: 6px 16px; border-radius: 99px; pointer-events: none;
+  font: 700 13px/1 var(--fs); letter-spacing: .16em; text-transform: uppercase; color: #fbe9b8; text-shadow: 0 1px 2px #000;
+  background: linear-gradient(180deg, rgba(36, 30, 25, .92), rgba(18, 15, 13, .92)); box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px rgba(231, 194, 106, .65), 0 6px 14px -6px #000; transition: opacity .3s; }
+.dy.sel .dy-reg { opacity: 0; }
+/* saha etiketi: ad, kademe, nitelik taşları, kalan süre; kilitli soluk, bulunduğun yer altın */
+.dy-tag { position: absolute; transform: translate(-50%, -50%) scale(calc(var(--iz, 1) * .82)); display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 5px 11px 5px 10px; border-radius: 10px; white-space: nowrap; text-align: center;
+  background: rgba(16, 13, 11, .86); box-shadow: 0 0 0 1px #0b0a0a, inset 0 0 0 1px rgba(231, 194, 106, .35), 0 4px 10px -4px #000; transition: opacity .3s, box-shadow .3s; }
+.dy-tag b { font: 700 11px/1 var(--fs); letter-spacing: .04em; color: #fbe9b8; }
+.dy-tag small { display: inline-flex; align-items: center; gap: 4px; font: 600 8.6px/1 var(--fn); color: var(--lab); } .dy-tag small .ic { font-size: 9px; color: #eaa293; }
+.dy-tag small em { font-style: normal; color: var(--muted); margin-left: 2px; } .dy-tag .hx-gems { height: 8px; width: auto; }
+.dy-tag .dt-q { position: absolute; left: 50%; top: -4px; width: 7px; height: 7px; margin-left: -3.5px; transform: rotate(45deg); background: var(--qc); box-shadow: 0 0 0 1px #0b0a0a, 0 0 6px var(--qc); }
+.dy-tag.q0 .dt-q { background: #e8e4dc; box-shadow: 0 0 0 1px #0b0a0a; }
+.dy-tag.lock { background: rgba(16, 13, 11, .72); } .dy-tag.lock b { color: #b8ad9c; }
+.dy-tag.here { box-shadow: 0 0 0 1px #0b0a0a, inset 0 0 0 1.5px #f3d68e, 0 0 14px -2px rgba(243, 214, 142, .7); }
+.dy-tag.city { flex-direction: row; gap: 6px; padding: 7px 13px; } .dy-tag.city .ic { font-size: 14px; color: var(--gold); } .dy-tag.city b { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.dy.sel .dy-tag { opacity: .45; } .dy.sel .dy-tag.on { opacity: 0; pointer-events: none; }
+
+/* düğümler (sahada) ve sürüler (denizde): yere oturan resim, nitelik halkası, kalan sayı; çalışılanın çevresinde ilerleme halkası */
+.dn { position: absolute; width: 64px; height: 64px; padding: 0; transform: translate(-50%, -72%) scale(var(--iz, 1)); transform-origin: 50% 72%; background: none; animation: dnIn .45s var(--spring) both; }
+@keyframes dnIn { from { opacity: 0; transform: translate(-50%, -72%) scale(calc(var(--iz, 1) * .4)); } }
+.dn::before { content: ''; position: absolute; left: 6px; right: 6px; bottom: 6px; height: 16px; border-radius: 50%; background: rgba(8, 6, 5, .45); box-shadow: inset 0 0 0 2px var(--qc), 0 0 10px -2px var(--qc); }
+.dn-art { position: absolute; left: 0; right: 0; top: -6px; bottom: 6px; display: grid; place-items: end center; }
+.dn-art .nd { width: 64px; height: 64px; overflow: visible; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .5)); }
+.dn-art .sh-art { width: 64px; height: auto; }
+.dn-ring { position: absolute; left: -4px; top: -2px; width: 72px; height: 72px; transform: rotate(-90deg); opacity: 0; transition: opacity .25s; }
+.dn-ring .r0 { fill: none; stroke: rgba(8, 6, 5, .55); stroke-width: 4; } .dn-ring .r1 { fill: none; stroke: #f3d68e; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 163.4; stroke-dashoffset: 163.4; transition: stroke-dashoffset .2s linear; }
+.dn.on .dn-ring { opacity: 1; } .dn.on::before { box-shadow: inset 0 0 0 2.4px #f3d68e, 0 0 16px 0 rgba(243, 214, 142, .7); }
+.dn-tx { position: absolute; left: 50%; bottom: -12px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 99px; white-space: nowrap;
+  font: 700 9.5px/1.2 var(--fn); color: #f2ead8; background: rgba(12, 10, 9, .88); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--qc) 70%, #2a2622); }
+.dn-tx small { font: 600 8.4px/1 var(--fb); color: var(--qc); } .dn-tx .hx-gems { height: 8px; width: auto; }
+.dn.low .dn-tx b { color: #f2b65a; }
+.dn:active { filter: brightness(1.15); }
+.dn.empty { width: 34px; height: 34px; transform: translate(-50%, -50%) scale(var(--iz, 1)); transform-origin: 50% 50%; display: grid; place-items: center; pointer-events: none; }
+.dn.empty::before { left: 0; right: 0; bottom: 0; top: 0; height: auto; border-radius: 50%; background: rgba(8, 6, 5, .35); box-shadow: inset 0 0 0 1.5px rgba(231, 194, 106, .35); }
+.dn.empty i { display: none; } .dn.empty b { position: relative; font: 600 8.6px/1 var(--fn); color: var(--lab); }
+.dn-ph { position: absolute; left: 50%; top: -14px; transform: translateX(-50%); padding: 2px 7px; border-radius: 99px; font: 600 8.6px/1.2 var(--fn); color: #cfe8e9; background: rgba(6, 14, 16, .85); white-space: nowrap; opacity: 0; }
+.dn.on .dn-ph { opacity: 1; }
+.dn.bite::before { box-shadow: inset 0 0 0 2.4px #f3a07c, 0 0 18px 0 rgba(243, 160, 124, .8); } .dn.bite .dn-ph { color: #fff; background: #c4553f; } .dn.bite .dn-ring .r1 { stroke: #f3a07c; }
+
+/* üst: geri tuşu ve seçili sahanın bilgisi (adanın altında) */
+#worldView .dy-back { position: absolute; z-index: 7; left: 14px; top: calc(var(--safe-t) + 58px); width: 36px; height: 36px; font-size: 15px; }
+.dy-info { position: absolute; z-index: 6; left: 58px; right: 14px; top: calc(var(--safe-t) + 54px); min-height: 44px; display: flex; align-items: center; gap: 9px; padding: 6px 10px 6px 7px; border-radius: 14px;
+  background: linear-gradient(180deg, rgba(36, 30, 25, .95), rgba(18, 15, 13, .95)); box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px rgba(231, 194, 106, .4), 0 8px 18px -10px #000;
+  opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity .3s, transform .4s var(--ease); }
+.dy-info.on { opacity: 1; transform: none; }
+.di-q { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; color: #f3d68e; background: radial-gradient(circle at 42% 34%, #342c25, #0f0d0c 72%); box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1.4px var(--qc); }
+.di-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.di-tx small { display: flex; align-items: center; gap: 4px; font: 600 8.6px/1 var(--fn); color: var(--lab); white-space: nowrap; overflow: hidden; } .di-tx .hx-gems { height: 8px; width: auto; }
+.di-tx b { font: 700 14px/1 var(--fs); letter-spacing: .03em; color: #fbe9b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.di-t { flex: none; display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 99px; font-size: 9.5px; color: var(--title); background: #100e0d; box-shadow: inset 0 0 0 1px #2a2622; } .di-t .ic { font-size: 10px; color: var(--gold); }
+.di-res { flex: none; display: inline-flex; align-items: center; gap: 3px; height: 22px; padding: 0 7px 0 3px; border-radius: 99px; background: #100e0d; box-shadow: inset 0 0 0 1px #2a2622; font-size: 9.5px; color: var(--title); }
+.di-res img { width: 18px; height: 18px; object-fit: contain; }
+/* kilitli saha paneli */
+.dy-lock { position: absolute; z-index: 6; left: 14px; right: 14px; bottom: calc(var(--cb-bot) + var(--cb) + 14px); display: flex; align-items: center; gap: 11px; padding: 11px 13px; border-radius: 16px;
+  background: linear-gradient(180deg, rgba(36, 30, 25, .96), rgba(18, 15, 13, .96)); box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1px rgba(226, 112, 95, .5), 0 10px 22px -10px #000;
+  opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .3s, transform .4s var(--ease); }
+.dy-lock.on { opacity: 1; transform: none; pointer-events: auto; }
+.dl-ic { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 15px; color: #eaa293; background: radial-gradient(circle at 42% 34%, #2b2622, #0c0b0a); box-shadow: 0 0 0 1.5px #0b0a0a, inset 0 0 0 1.4px rgba(226, 112, 95, .6); }
+.dl-tx { display: flex; flex-direction: column; gap: 4px; } .dl-tx b { font: 700 13px/1.1 var(--fs); color: #fbe9b8; } .dl-tx small { font: 400 10px/1.3 var(--fb); color: var(--muted); }
+/* alt çubuklar: sahada Oto | Topla, denizde av çubuğu; yalnız kendi kipinde */
+#worldView #fdBar, #worldView #fvBar { display: none; }
+#worldView.m-field #fdBar { display: flex; } #worldView.m-sea #fvBar { display: grid; }
+#worldView .fv-full, #worldView .fv-combo, #worldView .fight, #worldView .mg { z-index: 8; }
+#worldView:not(.m-sea) .fv-full, #worldView:not(.m-sea) .fv-combo { display: none; }
+
+/* uzaktan bakarken etiketler yalnız ad: kademe ve süre yakınlaşınca görünür */
+.dy.far .dy-tag small { display: none; } .dy.far .dy-tag { padding: 4px 9px; }
+.hx-gems { display: inline-block; height: 9px; width: auto; vertical-align: -1px; overflow: visible; }      /* nitelik taşları (js/sehir/altigen.js Hex.gemRow) */
